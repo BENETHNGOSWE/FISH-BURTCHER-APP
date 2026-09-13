@@ -30,16 +30,12 @@ after_install = "manase_butcher.setup.install.after_install"
 after_migrate = "manase_butcher.setup.install.after_migrate"
 before_uninstall = "manase_butcher.setup.install.before_uninstall"
 
-# Fixtures (loaded on every bench migrate).
-# Approvals for Processing/Waste/Transfer/Reconciliation/Expense/Closing are
-# implemented in the controllers as status fields with role-checked transitions
-# (on_update_after_submit), which keeps ledger posting deterministic.
-# ---------------------------------------------------------------------
-fixtures = [
-    {"dt": "Workspace", "filters": [["module", "in", [
-        "Manase Butcher", "Fish Inventory", "Fish Sales", "Fish Mobile"
-    ]]]},
-]
+# Fixtures
+# --------
+# Workspaces/Reports/Pages ship as standard module-folder JSON and are synced
+# automatically on install/migrate; Workflow approvals are handled in controllers
+# (status fields + role-checked on_update_after_submit transitions).
+fixtures = []
 
 # Role permission helpers (branch-level data isolation)
 # -----------------------------------------------------

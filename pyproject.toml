@@ -4,7 +4,8 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "manase_butcher"
-dynamic = ["version", "description"]
+dynamic = ["version"]
+description = "MANASE BUTCHER - fish supplier and multi-branch fish butcher/retail management for ERPNext v16"
 authors = [
   { name = "MANASE BUTCHER", email = "dev@manasebutcher.co.tz" }
 ]
