@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "phone",
+  "token_hash",
+  "col_82279",
+  "device_id",
+  "platform",
+  "fcm_token",
+  "col_15519",
+  "issued_at",
+  "expires_at",
+  "last_seen",
+  "revoked"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "phone",
+   "label": "Phone",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "token_hash",
+   "label": "Token Hash",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "device_id",
+   "label": "Device ID",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "platform",
+   "label": "Platform",
+   "fieldtype": "Select",
+   "options": "Android\niOS\nWeb"
+  },
+  {
+   "fieldname": "fcm_token",
+   "label": "FCM Token",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "col_15519",
+   "label": "Validity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issued_at",
+   "label": "Issued At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "expires_at",
+   "label": "Expires At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "last_seen",
+   "label": "Last Seen",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "revoked",
+   "label": "Revoked",
+   "fieldtype": "Check",
+   "default": 0
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Manase Butcher",
+ "name": "Mobile Session",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "autoname": "SESS-.#####",
+ "naming_rule": "Expression"
+}

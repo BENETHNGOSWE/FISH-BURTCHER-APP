@@ -1,0 +1,17 @@
+*.pyc
+__pycache__/
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+.env
+.idea/
+.vscode/
+.DS_Store
+*.log
+sites/
+config/pids/
+config/locks/
+config/supervisor.conf
+config/nginx.conf

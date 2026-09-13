@@ -1,0 +1,223 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_datetime",
+  "user",
+  "col_82279",
+  "branch",
+  "sec_transaction",
+  "transaction_doctype",
+  "transaction_name",
+  "action",
+  "field_label",
+  "sec_changes",
+  "old_value",
+  "new_value",
+  "reason",
+  "col_82279",
+  "ip_address",
+  "device_info"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_datetime",
+   "label": "Date Time",
+   "fieldtype": "Datetime",
+   "reqd": 1,
+   "read_only": 1,
+   "default": "now",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "user",
+   "label": "User",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "label": "Branch",
+   "fieldtype": "Link",
+   "options": "Branch",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sec_transaction",
+   "label": "Transaction",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "transaction_doctype",
+   "label": "Document Type",
+   "fieldtype": "Link",
+   "options": "DocType",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "transaction_name",
+   "label": "Document Name",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "action",
+   "label": "Action",
+   "fieldtype": "Select",
+   "read_only": 1,
+   "in_list_view": 1,
+   "options": "Create\nUpdate\nSubmit\nCancel\nAmend\nDelete\nApproval\nRejection\nLogin\nPrice Change\nPrint\nExport"
+  },
+  {
+   "fieldname": "field_label",
+   "label": "Field",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_changes",
+   "label": "Changes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "old_value",
+   "label": "Old Value",
+   "fieldtype": "Code",
+   "options": "txt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "new_value",
+   "label": "New Value",
+   "fieldtype": "Code",
+   "options": "txt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reason",
+   "label": "Reason",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ip_address",
+   "label": "IP Address",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "device_info",
+   "label": "Device / Browser",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Manase Butcher",
+ "name": "Audit Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Inventory Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "posting_datetime",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "autoname": "AUDIT-.YYYY.-.#####",
+ "naming_rule": "Expression"
+}

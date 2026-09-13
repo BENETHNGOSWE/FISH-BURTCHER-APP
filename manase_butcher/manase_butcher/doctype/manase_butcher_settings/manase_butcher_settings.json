@@ -1,0 +1,361 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_company_&_warehouses",
+  "company",
+  "central_raw_warehouse",
+  "central_processed_warehouse",
+  "processing_warehouse",
+  "waste_warehouse",
+  "transit_warehouse",
+  "default_cost_center",
+  "col_23463",
+  "waste_expense_account",
+  "stock_adjustment_account",
+  "cash_over_short_account",
+  "delivery_income_account",
+  "fish_cogs_account",
+  "sec_pricing_&_thresholds",
+  "default_currency",
+  "retail_price_list",
+  "wholesale_price_list",
+  "restaurant_price_list",
+  "hotel_price_list",
+  "waste_approval_kg",
+  "variance_approval_kg",
+  "expense_approval_limit",
+  "max_discount_percent",
+  "sec_mobile_payment_accounts",
+  "mobile_payment_accounts",
+  "sec_mobile_ordering",
+  "order_validity_minutes",
+  "default_delivery_fee",
+  "default_delivery_radius_km",
+  "col_63685",
+  "otp_length",
+  "otp_validity_minutes",
+  "otp_rate_per_window",
+  "max_cart_lines",
+  "sec_sms___otp_gateway",
+  "sms_gateway",
+  "sms_sender_id",
+  "sms_api_key",
+  "sms_api_secret",
+  "sms_api_url",
+  "sec_firebase_cloud_messaging",
+  "fcm_enabled",
+  "fcm_project_id",
+  "fcm_service_account",
+  "fcm_dry_run"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_company_&_warehouses",
+   "label": "Company & Warehouses",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "central_raw_warehouse",
+   "label": "Central Raw Fish Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "central_processed_warehouse",
+   "label": "Central Processed Fish Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "processing_warehouse",
+   "label": "Fish Processing Floor Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "waste_warehouse",
+   "label": "Fish Waste Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "transit_warehouse",
+   "label": "Fish In-Transit Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "default_cost_center",
+   "label": "Default Cost Center",
+   "fieldtype": "Link",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "col_23463",
+   "label": "Accounts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "waste_expense_account",
+   "label": "Fish Waste & Loss Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "stock_adjustment_account",
+   "label": "Stock Adjustment Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cash_over_short_account",
+   "label": "Cash Over/Short Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "delivery_income_account",
+   "label": "Delivery Income Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "fish_cogs_account",
+   "label": "Fish COGS Account",
+   "fieldtype": "Link",
+   "options": "Account"
+  },
+  {
+   "fieldname": "sec_pricing_&_thresholds",
+   "label": "Pricing & Thresholds",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_currency",
+   "label": "Default Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "TZS"
+  },
+  {
+   "fieldname": "retail_price_list",
+   "label": "Retail Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "wholesale_price_list",
+   "label": "Wholesale Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "restaurant_price_list",
+   "label": "Restaurant Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "hotel_price_list",
+   "label": "Hotel Price List",
+   "fieldtype": "Link",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "waste_approval_kg",
+   "label": "Waste Approval Threshold (KG)",
+   "fieldtype": "Float",
+   "default": 10,
+   "precision": 3
+  },
+  {
+   "fieldname": "variance_approval_kg",
+   "label": "Reconciliation Variance Approval (KG)",
+   "fieldtype": "Float",
+   "default": 2,
+   "precision": 3
+  },
+  {
+   "fieldname": "expense_approval_limit",
+   "label": "Branch Expense Approval Limit (TZS)",
+   "fieldtype": "Currency",
+   "default": 100000,
+   "options": "default_currency"
+  },
+  {
+   "fieldname": "max_discount_percent",
+   "label": "Maximum Cashier Discount %",
+   "fieldtype": "Percent",
+   "default": 5
+  },
+  {
+   "fieldname": "sec_mobile_payment_accounts",
+   "label": "Mobile Payment Accounts",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "mobile_payment_accounts",
+   "label": "Payment Accounts",
+   "fieldtype": "Table",
+   "options": "Mobile Payment Account"
+  },
+  {
+   "fieldname": "sec_mobile_ordering",
+   "label": "Mobile Ordering",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "order_validity_minutes",
+   "label": "Order Auto-Release Minutes",
+   "fieldtype": "Int",
+   "default": 20
+  },
+  {
+   "fieldname": "default_delivery_fee",
+   "label": "Default Delivery Fee",
+   "fieldtype": "Currency",
+   "options": "default_currency",
+   "default": 5000
+  },
+  {
+   "fieldname": "default_delivery_radius_km",
+   "label": "Default Delivery Radius (KM)",
+   "fieldtype": "Float",
+   "default": 10
+  },
+  {
+   "fieldname": "col_63685",
+   "label": "Mobile Limits",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "otp_length",
+   "label": "OTP Length",
+   "fieldtype": "Int",
+   "default": 6
+  },
+  {
+   "fieldname": "otp_validity_minutes",
+   "label": "OTP Validity (Minutes)",
+   "fieldtype": "Int",
+   "default": 5
+  },
+  {
+   "fieldname": "otp_rate_per_window",
+   "label": "Max OTP Requests / Window",
+   "fieldtype": "Int",
+   "default": 3
+  },
+  {
+   "fieldname": "max_cart_lines",
+   "label": "Max Cart Lines",
+   "fieldtype": "Int",
+   "default": 40
+  },
+  {
+   "fieldname": "sec_sms___otp_gateway",
+   "label": "SMS / OTP Gateway",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sms_gateway",
+   "label": "SMS Gateway",
+   "fieldtype": "Select",
+   "options": "Log (development)\nAfrica's Talking\nBeem\nGeneric HTTP",
+   "default": "Log (development)"
+  },
+  {
+   "fieldname": "sms_sender_id",
+   "label": "Sender ID",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "sms_api_key",
+   "label": "API Username / Key",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "sms_api_secret",
+   "label": "API Secret",
+   "fieldtype": "Password"
+  },
+  {
+   "fieldname": "sms_api_url",
+   "label": "Gateway URL",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "sec_firebase_cloud_messaging",
+   "label": "Firebase Cloud Messaging",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fcm_enabled",
+   "label": "Enable FCM",
+   "fieldtype": "Check",
+   "default": 0
+  },
+  {
+   "fieldname": "fcm_project_id",
+   "label": "FCM Project ID",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "fcm_service_account",
+   "label": "Service Account JSON",
+   "fieldtype": "Code",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "fcm_dry_run",
+   "label": "Dry Run (log only)",
+   "fieldtype": "Check",
+   "default": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Manase Butcher",
+ "name": "Manase Butcher Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "General Manager",
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "Accountant",
+   "read": 1,
+   "write": 0
+  },
+  {
+   "role": "Inventory Manager",
+   "read": 1,
+   "write": 0
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "issingle": 1
+}

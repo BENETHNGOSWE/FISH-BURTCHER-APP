@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "mode_of_payment",
+  "provider",
+  "expected_amount",
+  "actual_amount",
+  "variance",
+  "reference_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "mode_of_payment",
+   "label": "Mode of Payment",
+   "fieldtype": "Link",
+   "options": "Mode of Payment",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "provider",
+   "label": "Provider / Account",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "expected_amount",
+   "label": "Expected",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "actual_amount",
+   "label": "Actual Count",
+   "fieldtype": "Currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance",
+   "label": "Variance",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "formula": "actual_amount-expected_amount",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reference_note",
+   "label": "Note",
+   "fieldtype": "Data"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Sales",
+ "name": "Daily Closing Payment",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "istable": 1
+}

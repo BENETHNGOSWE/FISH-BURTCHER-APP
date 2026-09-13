@@ -1,0 +1,483 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_customer",
+  "customer",
+  "customer_name",
+  "phone",
+  "col_82279",
+  "branch",
+  "warehouse",
+  "created_from",
+  "sec_order",
+  "order_type",
+  "scheduled_time",
+  "delivery_address",
+  "delivery_address_display",
+  "latitude",
+  "longitude",
+  "sec_items",
+  "items",
+  "sec_payments",
+  "payments",
+  "sec_totals",
+  "total_qty_kg",
+  "subtotal",
+  "discount_total",
+  "delivery_fee",
+  "col_82279",
+  "grand_total",
+  "paid_amount",
+  "outstanding_amount",
+  "payment_status",
+  "sec_status",
+  "status",
+  "cancellation_reason",
+  "customer_rating",
+  "feedback",
+  "col_38068",
+  "confirmed_at",
+  "ready_at",
+  "delivered_at",
+  "sec_system_links",
+  "sales_order",
+  "sales_invoice",
+  "reservation_info",
+  "placed_by",
+  "notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_customer",
+   "label": "Customer",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "label": "Customer Name",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "phone",
+   "label": "Phone",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "label": "Fulfilment Branch",
+   "fieldtype": "Link",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Branch Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "created_from",
+   "label": "Created From",
+   "fieldtype": "Select",
+   "options": "Mobile\nDesk\nPOS",
+   "default": "Mobile"
+  },
+  {
+   "fieldname": "sec_order",
+   "label": "Order",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "order_type",
+   "label": "Order Type",
+   "fieldtype": "Select",
+   "options": "Pickup\nDelivery",
+   "default": "Pickup",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "scheduled_time",
+   "label": "Scheduled Time",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "delivery_address",
+   "label": "Delivery Address",
+   "fieldtype": "Link",
+   "options": "Address"
+  },
+  {
+   "fieldname": "delivery_address_display",
+   "label": "Address Text",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "latitude",
+   "label": "Latitude",
+   "fieldtype": "Float",
+   "precision": 8
+  },
+  {
+   "fieldname": "longitude",
+   "label": "Longitude",
+   "fieldtype": "Float",
+   "precision": 8
+  },
+  {
+   "fieldname": "sec_items",
+   "label": "Items",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "label": "Order Items",
+   "fieldtype": "Table",
+   "options": "Customer Order Item"
+  },
+  {
+   "fieldname": "sec_payments",
+   "label": "Payments",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payments",
+   "label": "Payments",
+   "fieldtype": "Table",
+   "options": "Customer Order Payment"
+  },
+  {
+   "fieldname": "sec_totals",
+   "label": "Totals",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_qty_kg",
+   "label": "Total KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "subtotal",
+   "label": "Subtotal",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_total",
+   "label": "Discount",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "delivery_fee",
+   "label": "Delivery Fee",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "label": "Grand Total",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "label": "Paid",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "label": "Outstanding",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_status",
+   "label": "Payment Status",
+   "fieldtype": "Select",
+   "options": "Unpaid\nPartly Paid\nPaid",
+   "default": "Unpaid",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sec_status",
+   "label": "Status",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "status",
+   "label": "Order Status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "default": "Draft",
+   "options": "Draft\nPending\nConfirmed\nRejected\nPreparing\nReady\nOut for Delivery\nDelivered\nCollected\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "cancellation_reason",
+   "label": "Cancellation Reason",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "customer_rating",
+   "label": "Rating",
+   "fieldtype": "Float"
+  },
+  {
+   "fieldname": "feedback",
+   "label": "Feedback",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "col_38068",
+   "label": "Timestamps",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "confirmed_at",
+   "label": "Confirmed At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ready_at",
+   "label": "Ready At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delivered_at",
+   "label": "Delivered/Collected At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_system_links",
+   "label": "System Links",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sales_order",
+   "label": "Sales Order",
+   "fieldtype": "Link",
+   "options": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "label": "Sales Invoice",
+   "fieldtype": "Link",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reservation_info",
+   "label": "Reservation Info",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "placed_by",
+   "label": "Placed By (session)",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "options": "Customer Order",
+   "read_only": 1,
+   "print_hide": 1,
+   "no_copy": 1,
+   "depends_on": "eval:doc.docstatus==2"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Sales",
+ "name": "Customer Order",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Inventory Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Sales Staff",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Cashier",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Delivery Staff",
+   "create": 0,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Warehouse Staff",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "autoname": "MO-.YYYY.-.#####",
+ "naming_rule": "Expression",
+ "search_fields": "customer,phone,status,branch"
+}

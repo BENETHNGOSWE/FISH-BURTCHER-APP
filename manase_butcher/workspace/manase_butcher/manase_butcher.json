@@ -1,0 +1,285 @@
+{
+ "name": "MANASE BUTCHER",
+ "doctype": "Workspace",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "owner": "Administrator",
+ "modified_by": "Administrator",
+ "title": "MANASE BUTCHER",
+ "label": "MANASE BUTCHER",
+ "module": "Manase Butcher",
+ "category": "MANASE BUTCHER",
+ "icon": "fish",
+ "is_standard": 1,
+ "is_hidden": 0,
+ "extends_another_page": 0,
+ "extends": "",
+ "hide_custom": 0,
+ "content": "[{\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Open Transfers\", \"label\": \"MB Open Transfers\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Pending Mobile Orders\", \"label\": \"MB Pending Mobile Orders\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Supplier Debt\", \"label\": \"MB Supplier Debt\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Customer Debt\", \"label\": \"MB Customer Debt\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Current Stock KG\", \"label\": \"MB Current Stock KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Waste KG\", \"label\": \"MB Fish Waste KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Sold KG\", \"label\": \"MB Fish Sold KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Received KG\", \"label\": \"MB Fish Received KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Gross Profit\", \"label\": \"MB Today Gross Profit\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Expenses\", \"label\": \"MB Today Expenses\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Purchases\", \"label\": \"MB Today Purchases\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Sales\", \"label\": \"MB Today Sales\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Today\", \"hidden\": 0, \"card_name\": \"Today\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Operations\", \"hidden\": 0, \"card_name\": \"Operations\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Key Reports\", \"hidden\": 0, \"card_name\": \"Key Reports\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Setup\", \"hidden\": 0, \"card_name\": \"Setup\"}}]",
+ "links": [
+  {
+   "type": "Page",
+   "label": "POS",
+   "link_to": "fish_pos",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "Page"
+  },
+  {
+   "type": "DocType",
+   "label": "New Fish Receiving",
+   "link_to": "Fish Receiving",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 1,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "New Fish Processing",
+   "link_to": "Fish Processing",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "New Stock Transfer",
+   "link_to": "Fish Stock Transfer",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Branch Stock Reconciliation",
+   "link_to": "Branch Stock Reconciliation",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Daily Branch Closing",
+   "link_to": "Daily Branch Closing",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Today",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Customer Orders",
+   "link_to": "Customer Order",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 1,
+   "is_query_report": 0,
+   "card": "Operations",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Sales Invoices",
+   "link_to": "Sales Invoice",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Operations",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Fish Waste Records",
+   "link_to": "Fish Waste Record",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Operations",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Fish Batches",
+   "link_to": "Fish Batch",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Operations",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "Report",
+   "label": "Where Did The KG Go?",
+   "link_to": "Where Did The KG Go?",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "card": "Key Reports",
+   "custom": 0,
+   "link_type": "Report"
+  },
+  {
+   "type": "Report",
+   "label": "Branch Performance",
+   "link_to": "Branch Performance",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "card": "Key Reports",
+   "custom": 0,
+   "link_type": "Report"
+  },
+  {
+   "type": "Report",
+   "label": "Fish Profitability",
+   "link_to": "Fish Profitability",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "card": "Key Reports",
+   "custom": 0,
+   "link_type": "Report"
+  },
+  {
+   "type": "Report",
+   "label": "Processing Yield",
+   "link_to": "Processing Yield",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "card": "Key Reports",
+   "custom": 0,
+   "link_type": "Report"
+  },
+  {
+   "type": "DocType",
+   "label": "Manase Butcher Settings",
+   "link_to": "Manase Butcher Settings",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Setup",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Branches",
+   "link_to": "Branch",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Setup",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Fish Species",
+   "link_to": "Fish Species",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Setup",
+   "custom": 0,
+   "link_type": "DocType"
+  },
+  {
+   "type": "DocType",
+   "label": "Audit Log",
+   "link_to": "Audit Log",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 0,
+   "card": "Setup",
+   "custom": 0,
+   "link_type": "DocType"
+  }
+ ],
+ "charts": [],
+ "number_cards": [
+  {
+   "name": "MB Today Sales"
+  },
+  {
+   "name": "MB Today Purchases"
+  },
+  {
+   "name": "MB Today Expenses"
+  },
+  {
+   "name": "MB Today Gross Profit"
+  },
+  {
+   "name": "MB Fish Received KG"
+  },
+  {
+   "name": "MB Fish Sold KG"
+  },
+  {
+   "name": "MB Fish Waste KG"
+  },
+  {
+   "name": "MB Current Stock KG"
+  },
+  {
+   "name": "MB Customer Debt"
+  },
+  {
+   "name": "MB Supplier Debt"
+  },
+  {
+   "name": "MB Pending Mobile Orders"
+  },
+  {
+   "name": "MB Open Transfers"
+  }
+ ],
+ "shortcuts": [],
+ "pin_to_bottom": 0,
+ "pin_to_top": true,
+ "selector": "",
+ "charts_label": "Charts",
+ "shortcuts_label": "Shortcuts",
+ "restrict_to_domain": "",
+ "public": 1,
+ "for_user": ""
+}

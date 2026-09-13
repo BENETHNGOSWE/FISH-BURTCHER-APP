@@ -1,0 +1,360 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_route",
+  "posting_date",
+  "source_branch",
+  "source_warehouse",
+  "col_82279",
+  "target_branch",
+  "target_warehouse",
+  "transit_warehouse",
+  "sec_transport",
+  "driver",
+  "vehicle_no",
+  "sec_fish",
+  "items",
+  "sec_totals",
+  "total_sent_kg",
+  "total_received_kg",
+  "total_variance_kg",
+  "sec_status",
+  "status",
+  "dispatched_by",
+  "dispatched_at",
+  "col_82279",
+  "received_by",
+  "received_at",
+  "outbound_stock_entry",
+  "inbound_stock_entry",
+  "notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_route",
+   "label": "Route",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "source_branch",
+   "label": "Source Branch",
+   "fieldtype": "Link",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "source_warehouse",
+   "label": "Source Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_branch",
+   "label": "Destination Branch",
+   "fieldtype": "Link",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "target_warehouse",
+   "label": "Destination Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "transit_warehouse",
+   "label": "In-Transit Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sec_transport",
+   "label": "Transport",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "driver",
+   "label": "Driver / Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "vehicle_no",
+   "label": "Vehicle No",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "sec_fish",
+   "label": "Fish",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "label": "Transfer Lines",
+   "fieldtype": "Table",
+   "options": "Fish Transfer Item",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "sec_totals",
+   "label": "Totals",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_sent_kg",
+   "label": "Sent KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_received_kg",
+   "label": "Received KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_variance_kg",
+   "label": "Variance KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sec_status",
+   "label": "Status",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "default": "Draft",
+   "options": "Draft\nSubmitted\nApproved\nDispatched\nReceived\nCompleted\nCancelled",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "dispatched_by",
+   "label": "Dispatched By",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "dispatched_at",
+   "label": "Dispatched At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "received_by",
+   "label": "Received By",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "received_at",
+   "label": "Received At",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "outbound_stock_entry",
+   "label": "Outbound Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "inbound_stock_entry",
+   "label": "Inbound Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "options": "Fish Stock Transfer",
+   "read_only": 1,
+   "print_hide": 1,
+   "no_copy": 1,
+   "depends_on": "eval:doc.docstatus==2"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Stock Transfer",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Inventory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Warehouse Staff",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Delivery Staff",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Sales Staff",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "is_submittable": 1,
+ "autoname": "TR-.YYYY.-.#####",
+ "naming_rule": "Expression",
+ "search_fields": "target_branch,status,posting_date"
+}

@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "sec_movement_(kg,_system_derived)",
+  "opening_kg",
+  "received_kg",
+  "transferred_in_kg",
+  "transferred_out_kg",
+  "sales_kg",
+  "waste_kg",
+  "returns_kg",
+  "adjustments_kg",
+  "expected_kg",
+  "sec_physical",
+  "physical_kg",
+  "variance_kg",
+  "valuation_rate",
+  "variance_value",
+  "reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Fish Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Item Name",
+   "fieldtype": "Data",
+   "fetch_from": "item.item_name"
+  },
+  {
+   "fieldname": "sec_movement_(kg,_system_derived)",
+   "label": "Movement (KG, system derived)",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "opening_kg",
+   "label": "Opening KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "received_kg",
+   "label": "Transfers In / Received",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "transferred_in_kg",
+   "label": "Other Transfers In",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "transferred_out_kg",
+   "label": "Transferred Out",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_kg",
+   "label": "Sales KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "waste_kg",
+   "label": "Waste KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "returns_kg",
+   "label": "Returns KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "adjustments_kg",
+   "label": "Adjustments KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "expected_kg",
+   "label": "Expected KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "bold": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sec_physical",
+   "label": "Physical",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "physical_kg",
+   "label": "Physical Count KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "variance_kg",
+   "label": "Variance KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "valuation_rate",
+   "label": "Value / KG",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "variance_value",
+   "label": "Variance Value",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "formula": "variance_kg*valuation_rate"
+  },
+  {
+   "fieldname": "reason",
+   "label": "Variance Reason",
+   "fieldtype": "Small Text",
+   "in_list_view": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Reconciliation Count Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "istable": 1
+}

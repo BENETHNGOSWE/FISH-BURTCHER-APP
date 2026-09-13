@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "phone",
+  "otp_hash",
+  "col_82279",
+  "purpose",
+  "status",
+  "attempts",
+  "col_31818",
+  "generated_at",
+  "expires_at",
+  "verified_at",
+  "col_12767",
+  "ip_address",
+  "device_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "phone",
+   "label": "Phone",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "otp_hash",
+   "label": "OTP Hash",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purpose",
+   "label": "Purpose",
+   "fieldtype": "Select",
+   "options": "Login\nVerification",
+   "default": "Login"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "Pending\nVerified\nExpired\nCancelled",
+   "default": "Pending",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "attempts",
+   "label": "Attempts",
+   "fieldtype": "Int",
+   "default": 0
+  },
+  {
+   "fieldname": "col_31818",
+   "label": "Times",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "generated_at",
+   "label": "Generated At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "expires_at",
+   "label": "Expires At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "verified_at",
+   "label": "Verified At",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "col_12767",
+   "label": "Client",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ip_address",
+   "label": "IP Address",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "device_id",
+   "label": "Device ID",
+   "fieldtype": "Data"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Manase Butcher",
+ "name": "OTP Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "generated_at",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "autoname": "OTP-.#####",
+ "naming_rule": "Expression"
+}

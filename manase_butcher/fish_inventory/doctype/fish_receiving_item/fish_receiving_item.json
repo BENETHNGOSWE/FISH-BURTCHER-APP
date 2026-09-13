@@ -1,0 +1,156 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "species",
+  "col_82279",
+  "grade",
+  "freshness",
+  "batch",
+  "sec_weight",
+  "gross_weight_kg",
+  "tare_weight_kg",
+  "qty_kg",
+  "pieces",
+  "col_70643",
+  "uom",
+  "rate",
+  "amount",
+  "quality_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Fish Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Item Name",
+   "fieldtype": "Data",
+   "fetch_from": "item.item_name",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "species",
+   "label": "Species",
+   "fieldtype": "Link",
+   "options": "Fish Species",
+   "fetch_from": "item.mb_species"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grade",
+   "label": "Grade",
+   "fieldtype": "Select",
+   "options": "A\nB\nC",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "freshness",
+   "label": "Freshness",
+   "fieldtype": "Select",
+   "options": "Fresh\nFrozen",
+   "default": "Fresh",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "batch",
+   "label": "ERPNext Batch",
+   "fieldtype": "Link",
+   "options": "Batch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_weight",
+   "label": "Weight",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "gross_weight_kg",
+   "label": "Gross Weight KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tare_weight_kg",
+   "label": "Tare Weight KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "qty_kg",
+   "label": "Net Weight KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pieces",
+   "label": "Pieces",
+   "fieldtype": "Int"
+  },
+  {
+   "fieldname": "col_70643",
+   "label": "Cost",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "uom",
+   "label": "UOM",
+   "fieldtype": "Link",
+   "options": "UOM",
+   "default": "Kg"
+  },
+  {
+   "fieldname": "rate",
+   "label": "Rate / KG",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "label": "Amount",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1,
+   "formula": "qty_kg*rate",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quality_notes",
+   "label": "Quality Notes",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Receiving Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "istable": 1
+}

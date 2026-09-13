@@ -1,0 +1,7 @@
+include MANIFEST.in
+include requirements.txt
+include pyproject.toml
+include LICENSE
+include README.md
+recursive-include manase_butcher *.json *.py *.js *.css *.html *.md *.txt *.svg *.png
+recursive-exclude manase_butcher __pycache__

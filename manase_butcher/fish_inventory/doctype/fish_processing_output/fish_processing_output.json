@@ -1,0 +1,85 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "target_warehouse",
+  "col_82279",
+  "qty_kg",
+  "is_waste",
+  "valuation_rate",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Output Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Item Name",
+   "fieldtype": "Data",
+   "fetch_from": "item.item_name"
+  },
+  {
+   "fieldname": "target_warehouse",
+   "label": "Target Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qty_kg",
+   "label": "Output KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "is_waste",
+   "label": "Waste Line",
+   "fieldtype": "Check",
+   "default": 0,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "valuation_rate",
+   "label": "Value / KG",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Value",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "formula": "qty_kg*valuation_rate"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Processing Output",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "istable": 1
+}

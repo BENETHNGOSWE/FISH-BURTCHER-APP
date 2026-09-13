@@ -1,0 +1,361 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_closing",
+  "posting_date",
+  "branch",
+  "warehouse",
+  "col_82279",
+  "cashier",
+  "closed_by",
+  "sec_tender_counts",
+  "payments",
+  "sec_sales_summary",
+  "invoice_count",
+  "kg_sold",
+  "sales_total",
+  "credit_total",
+  "col_31232",
+  "opening_stock_kg",
+  "closing_stock_kg",
+  "sec_cash_summary",
+  "expected_total",
+  "actual_total",
+  "total_variance",
+  "col_82279",
+  "cash_expected",
+  "cash_actual",
+  "cash_variance",
+  "sec_approval",
+  "explanation",
+  "approval_status",
+  "approved_by",
+  "approval_date",
+  "col_82279",
+  "journal_entry",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_closing",
+   "label": "Closing",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "branch",
+   "label": "Branch",
+   "fieldtype": "Link",
+   "options": "Branch",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cashier",
+   "label": "Cashier (Employee)",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "closed_by",
+   "label": "Closed By (User)",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "sec_tender_counts",
+   "label": "Tender Counts",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payments",
+   "label": "Payment Counts",
+   "fieldtype": "Table",
+   "options": "Daily Closing Payment",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "sec_sales_summary",
+   "label": "Sales Summary",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "invoice_count",
+   "label": "Invoices",
+   "fieldtype": "Int",
+   "read_only": 1
+  },
+  {
+   "fieldname": "kg_sold",
+   "label": "KG Sold",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sales_total",
+   "label": "Sales Total",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "credit_total",
+   "label": "Credit Sales",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_31232",
+   "label": "Stock KG",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "opening_stock_kg",
+   "label": "Opening Stock KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "closing_stock_kg",
+   "label": "Closing Stock KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_cash_summary",
+   "label": "Cash Summary",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "expected_total",
+   "label": "Expected Total",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "actual_total",
+   "label": "Actual Total",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_variance",
+   "label": "Total Variance",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cash_expected",
+   "label": "Expected Cash",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cash_actual",
+   "label": "Actual Cash",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "cash_variance",
+   "label": "Cash Variance",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_approval",
+   "label": "Approval",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "explanation",
+   "label": "Variance Explanation",
+   "fieldtype": "Small Text",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "approval_status",
+   "label": "Approval Status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "default": "Draft",
+   "options": "Draft\nSubmitted\nApproved\nRejected",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approval_date",
+   "label": "Approval Date",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "journal_entry",
+   "label": "Cash Over/Short Journal Entry",
+   "fieldtype": "Link",
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "options": "Daily Branch Closing",
+   "read_only": 1,
+   "print_hide": 1,
+   "no_copy": 1,
+   "depends_on": "eval:doc.docstatus==2"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Sales",
+ "name": "Daily Branch Closing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Cashier",
+   "create": 1,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Sales Staff",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "is_submittable": 1,
+ "autoname": "CLOSE-.YYYY.-.#####",
+ "naming_rule": "Expression",
+ "search_fields": "branch,posting_date"
+}

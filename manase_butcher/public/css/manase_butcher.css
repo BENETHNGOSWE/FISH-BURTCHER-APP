@@ -1,0 +1,39 @@
+/* MANASE BUTCHER styles */
+:root {
+  --mb-blue: #0b3d63;
+  --mb-teal: #0e8a8f;
+  --mb-gold: #f2b33d;
+}
+
+.fish-pos .fish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+.fish-pos .fish-card {
+  border: 1px solid var(--border-color, #e2e2e2);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  background: #fff;
+}
+.fish-pos .fish-card.out { opacity: 0.55; }
+.fish-pos .fish-card-img { font-size: 34px; }
+.fish-pos .fish-card-name { font-weight: 600; min-height: 36px; }
+.fish-pos .fish-card-meta { color: #888; font-size: 11px; }
+.fish-pos .fish-card-kg { font-weight: 700; color: var(--mb-teal); }
+.fish-pos .fish-card-price { color: var(--mb-blue); font-size: 12px; margin-bottom: 6px; }
+.fish-pos .fish-right {
+  border-left: 1px solid var(--border-color, #e2e2e2);
+  padding-left: 14px;
+}
+.fish-pos .fish-line {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; border-bottom: 1px dashed #eee;
+}
+.fish-pos .fish-toolbar { margin-bottom: 6px; }
+.fish-pos .fish-search { margin-bottom: 6px; }
+.fish-pos .btn-block { width: 100%; margin-top: 10px; }
+.mb-kpi-good { color: #1f8a35; font-weight: 700; }
+.mb-kpi-bad { color: #c0392b; font-weight: 700; }

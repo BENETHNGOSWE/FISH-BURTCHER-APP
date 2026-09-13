@@ -1,0 +1,30 @@
+[build-system]
+requires = ["flit_core >=3.9.0,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "manase_butcher"
+dynamic = ["version", "description"]
+authors = [
+  { name = "MANASE BUTCHER", email = "dev@manasebutcher.co.tz" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  # Frappe and ERPNext are provided by the bench environment
+]
+
+[project.optional-dependencies]
+fcm = ["google-auth>=2.0.0"]
+
+[tool.flit.module]
+name = "manase_butcher"
+
+[tool.bench.app]
+app-name = "manase_butcher"
+app-title = "MANASE BUTCHER"
+app-publisher = "MANASE BUTCHER"
+app-description = "Fish supplier & multi-branch butcher management (KG tracking, processing, branches, mobile orders)"
+app-module = "Manase Butcher"
+app-license = "MIT"
+required-apps = "erpnext"

@@ -1,0 +1,400 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_processing",
+  "posting_date",
+  "employee",
+  "processing_staff",
+  "col_82279",
+  "company",
+  "fish_batch",
+  "erpnext_batch",
+  "sec_warehouses",
+  "source_warehouse",
+  "processing_warehouse",
+  "col_82279",
+  "target_warehouse",
+  "waste_warehouse",
+  "sec_input_(whole_fish)",
+  "inputs",
+  "sec_output_(cuts___waste)",
+  "outputs",
+  "sec_yield",
+  "input_kg",
+  "output_kg",
+  "sellable_output_kg",
+  "col_82279",
+  "waste_kg",
+  "yield_pct",
+  "waste_pct",
+  "processing_cost",
+  "sec_approval_&_posting",
+  "approval_status",
+  "approved_by",
+  "approval_date",
+  "col_82279",
+  "rejection_reason",
+  "stock_entry",
+  "notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_processing",
+   "label": "Processing",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Processing Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "employee",
+   "label": "Processor (Employee)",
+   "fieldtype": "Link",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_staff",
+   "label": "Processed By (User)",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company",
+   "reqd": 1,
+   "default": "MANASE BUTCHER LTD"
+  },
+  {
+   "fieldname": "fish_batch",
+   "label": "Fish Batch",
+   "fieldtype": "Link",
+   "options": "Fish Batch"
+  },
+  {
+   "fieldname": "erpnext_batch",
+   "label": "ERPNext Batch",
+   "fieldtype": "Link",
+   "options": "Batch"
+  },
+  {
+   "fieldname": "sec_warehouses",
+   "label": "Warehouses",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "source_warehouse",
+   "label": "Source (Raw Fish) Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "processing_warehouse",
+   "label": "Processing / WIP Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_warehouse",
+   "label": "Target (Processed Fish) Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "waste_warehouse",
+   "label": "Waste Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sec_input_(whole_fish)",
+   "label": "Input (Whole Fish)",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "inputs",
+   "label": "Input Lines",
+   "fieldtype": "Table",
+   "options": "Fish Processing Input"
+  },
+  {
+   "fieldname": "sec_output_(cuts___waste)",
+   "label": "Output (Cuts / Waste)",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "outputs",
+   "label": "Output Lines",
+   "fieldtype": "Table",
+   "options": "Fish Processing Output"
+  },
+  {
+   "fieldname": "sec_yield",
+   "label": "Yield",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "input_kg",
+   "label": "Input KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "output_kg",
+   "label": "Total Output KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sellable_output_kg",
+   "label": "Sellable Output KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "waste_kg",
+   "label": "Waste KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "yield_pct",
+   "label": "Yield %",
+   "fieldtype": "Float",
+   "precision": 2,
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "waste_pct",
+   "label": "Waste %",
+   "fieldtype": "Float",
+   "precision": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "processing_cost",
+   "label": "Processing Cost",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "sec_approval_&_posting",
+   "label": "Approval & Posting",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "approval_status",
+   "label": "Approval Status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "options": "Draft\nPending Approval\nApproved\nRejected",
+   "default": "Draft",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "label": "Approved By",
+   "fieldtype": "Link",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approval_date",
+   "label": "Approval Date",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rejection_reason",
+   "label": "Rejection Reason",
+   "fieldtype": "Small Text",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "stock_entry",
+   "label": "Stock Entry",
+   "fieldtype": "Link",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "options": "Fish Processing",
+   "read_only": 1,
+   "print_hide": 1,
+   "no_copy": 1,
+   "depends_on": "eval:doc.docstatus==2"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Processing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Inventory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Processing Staff",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Warehouse Staff",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "is_submittable": 1,
+ "autoname": "PROC-.YYYY.-.#####",
+ "naming_rule": "Expression",
+ "search_fields": "employee,posting_date,fish_batch"
+}

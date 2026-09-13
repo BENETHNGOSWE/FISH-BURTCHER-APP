@@ -1,0 +1,17 @@
+{
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "Report",
+ "name": "Fish Sales Analysis",
+ "report_name": "Fish Sales Analysis",
+ "reference_doctype": "Item",
+ "is_standard": "Yes",
+ "module": "Fish Sales",
+ "report_type": "Script Report",
+ "letter_head": null,
+ "disabled": 0,
+ "idx": 0,
+ "filters": []
+}

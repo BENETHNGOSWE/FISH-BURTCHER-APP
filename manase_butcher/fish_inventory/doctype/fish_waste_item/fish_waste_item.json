@@ -1,0 +1,78 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "qty_kg",
+  "col_82279",
+  "valuation_rate",
+  "amount",
+  "reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Fish Item",
+   "fieldtype": "Link",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Item Name",
+   "fieldtype": "Data",
+   "fetch_from": "item.item_name"
+  },
+  {
+   "fieldname": "qty_kg",
+   "label": "Waste KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valuation_rate",
+   "label": "Cost / KG",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Value",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "formula": "qty_kg*valuation_rate",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reason",
+   "label": "Reason",
+   "fieldtype": "Small Text",
+   "reqd": 1,
+   "in_list_view": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Waste Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "istable": 1
+}

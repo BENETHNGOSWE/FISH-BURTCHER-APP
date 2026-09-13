@@ -1,0 +1,3 @@
+# Frappe and ERPNext are provided by the bench environment and must NOT be pinned here.
+# Optional: FCM v1 authentication (otherwise FCM runs in dry-run/log mode)
+# google-auth>=2.0.0

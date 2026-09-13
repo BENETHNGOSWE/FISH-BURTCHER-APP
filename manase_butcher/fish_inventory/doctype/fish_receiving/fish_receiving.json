@@ -1,0 +1,395 @@
+{
+ "actions": [],
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sec_supplier",
+  "supplier",
+  "supplier_delivery_note",
+  "employee",
+  "col_93808",
+  "posting_date",
+  "posting_time",
+  "company",
+  "sec_destination_&_currency",
+  "warehouse",
+  "vehicle_no",
+  "col_82279",
+  "currency",
+  "conversion_rate",
+  "sec_fish_weighing",
+  "items",
+  "sec_landed_costs",
+  "landing_costs",
+  "sec_totals",
+  "total_qty_kg",
+  "total_pieces",
+  "col_82279",
+  "purchase_total",
+  "total_landed_cost",
+  "landed_cost_per_kg",
+  "sec_payment",
+  "payment_status",
+  "paid_amount",
+  "outstanding_amount",
+  "col_11907",
+  "create_purchase_invoice",
+  "purchase_receipt",
+  "purchase_invoice",
+  "sec_notes",
+  "notes",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "sec_supplier",
+   "label": "Supplier",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "supplier",
+   "label": "Supplier",
+   "fieldtype": "Link",
+   "options": "Supplier",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "supplier_delivery_note",
+   "label": "Supplier Delivery Note",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "employee",
+   "label": "Receiving Employee",
+   "fieldtype": "Link",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "col_93808",
+   "label": "Posting",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Posting Date",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_time",
+   "label": "Posting Time",
+   "fieldtype": "Time",
+   "default": "Now"
+  },
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "options": "Company",
+   "reqd": 1,
+   "default": "MANASE BUTCHER LTD"
+  },
+  {
+   "fieldname": "sec_destination_&_currency",
+   "label": "Destination & Currency",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Central Raw Warehouse",
+   "fieldtype": "Link",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle_no",
+   "label": "Vehicle No",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "TZS"
+  },
+  {
+   "fieldname": "conversion_rate",
+   "label": "Exchange Rate",
+   "fieldtype": "Float",
+   "default": 1
+  },
+  {
+   "fieldname": "sec_fish_weighing",
+   "label": "Fish Weighing",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "label": "Fish Lines",
+   "fieldtype": "Table",
+   "options": "Fish Receiving Item"
+  },
+  {
+   "fieldname": "sec_landed_costs",
+   "label": "Landed Costs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "landing_costs",
+   "label": "Additional Costs",
+   "fieldtype": "Table",
+   "options": "Fish Landing Cost"
+  },
+  {
+   "fieldname": "sec_totals",
+   "label": "Totals",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_qty_kg",
+   "label": "Total Received KG",
+   "fieldtype": "Float",
+   "precision": 3,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_pieces",
+   "label": "Total Pieces",
+   "fieldtype": "Int",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_82279",
+   "label": null,
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_total",
+   "label": "Purchase Total",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_landed_cost",
+   "label": "Total Landed Cost",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "landed_cost_per_kg",
+   "label": "Landed Cost / KG",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_payment",
+   "label": "Payment",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payment_status",
+   "label": "Payment Status",
+   "fieldtype": "Select",
+   "options": "Unpaid\nPartly Paid\nPaid",
+   "default": "Unpaid",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "label": "Paid Amount",
+   "fieldtype": "Currency",
+   "options": "currency"
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "label": "Outstanding",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_11907",
+   "label": "Billing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "create_purchase_invoice",
+   "label": "Create Purchase Invoice",
+   "fieldtype": "Check",
+   "default": 0
+  },
+  {
+   "fieldname": "purchase_receipt",
+   "label": "Purchase Receipt",
+   "fieldtype": "Link",
+   "options": "Purchase Receipt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "purchase_invoice",
+   "label": "Purchase Invoice",
+   "fieldtype": "Link",
+   "options": "Purchase Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sec_notes",
+   "label": "Notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Amended From",
+   "fieldtype": "Link",
+   "options": "Fish Receiving",
+   "read_only": 1,
+   "print_hide": 1,
+   "no_copy": 1,
+   "depends_on": "eval:doc.docstatus==2"
+  }
+ ],
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fish Inventory",
+ "name": "Fish Receiving",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "Business Owner",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "General Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Accountant",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Inventory Manager",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Procurement Officer",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Warehouse Staff",
+   "create": 1,
+   "read": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  },
+  {
+   "role": "Branch Manager",
+   "create": 0,
+   "read": 1,
+   "write": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "delete": 0,
+   "email": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "editable_grid": 1,
+ "grid_page_length": 50,
+ "is_submittable": 1,
+ "autoname": "REC-.YYYY.-.#####",
+ "naming_rule": "Expression",
+ "search_fields": "supplier,posting_date"
+}
