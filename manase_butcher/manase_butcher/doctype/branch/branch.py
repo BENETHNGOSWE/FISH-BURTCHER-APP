@@ -83,8 +83,16 @@ class Branch(Document):
     def _ensure_cost_center(self):
         if self.cost_center and frappe.db.exists("Cost Center", self.cost_center):
             return self.cost_center
-        parent = (frappe.db.get_value("Company", self.company, "cost_center")
-                  or f"Main - {self._abbr()}")
+        parent = frappe.db.get_value("Company", self.company, "cost_center")
+        # A Company may reference a leaf Cost Center in older/test databases.
+        # Branch Cost Centers must always be children of a group node.
+        if not parent or not frappe.db.get_value("Cost Center", parent, "is_group"):
+            parent = frappe.db.get_value(
+                "Cost Center",
+                {"company": self.company, "is_group": 1},
+                "name", order_by="lft asc")
+        if not parent:
+            frappe.throw(_("Create a group Cost Center for {0} before creating branches").format(self.company))
         cc_name = f"{self.branch_name.strip()} - {self._abbr()}"
         existing = frappe.db.get_value("Cost Center", {"cost_center_name": self.branch_name.strip(),
                                                        "company": self.company})
