@@ -128,5 +128,5 @@ CUSTOM_FIELDS = {
 
 
 def setup_custom_fields():
-    create_custom_fields(CUSTOM_FIELDS, ignore_mandatory=True)
+    create_custom_fields(CUSTOM_FIELDS)
     frappe.db.commit()
