@@ -73,7 +73,7 @@ def _stock_summary(branch):
     row = frappe.db.sql(
         """SELECT COUNT(*) lines, COALESCE(SUM(actual_qty-reserved_qty),0) kg
            FROM tabBin WHERE warehouse=%s AND actual_qty-reserved_qty > 0
-             AND item_code IN (SELECT name FROM tabItem WHERE custom_mb_sellable=1)""",
+             AND item_code IN (SELECT name FROM tabItem WHERE mb_sellable=1)""",
         warehouse, as_dict=True)[0]
     return {"fish_lines": row.lines, "total_kg": round(flt(row.kg), 3)}
 
@@ -99,6 +99,6 @@ def set_preferred():
     branch = param("branch")
     if not frappe.db.exists("Branch", branch):
         frappe.throw("Unknown branch")
-    frappe.db.set_value("Customer", customer, "custom_mb_preferred_branch", branch,
+    frappe.db.set_value("Customer", customer, "mb_preferred_branch", branch,
                         update_modified=False)
     return {"ok": True}

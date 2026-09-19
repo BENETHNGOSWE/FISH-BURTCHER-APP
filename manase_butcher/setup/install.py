@@ -59,13 +59,14 @@ def after_install(*args, **kwargs):
         _ensure_roles()
         _ensure_uoms()
         _ensure_item_groups()
+        # Custom fields must exist before provisioning records that use them.
+        setup_custom_fields()
         _ensure_warehouse_types()
         company = _default_company()
         if company:
             _ensure_company_structure(company)
             _ensure_default_branches(company)
             _configure_settings(company)
-        setup_custom_fields()
         try:
             from manase_butcher.setup.number_cards import setup_number_cards
             setup_number_cards()
@@ -83,7 +84,7 @@ def after_migrate(*args, **kwargs):
     _ensure_warehouse_types()
     company = _default_company()
     if company and not frappe.db.get_value("Warehouse",
-                                           {"custom_mb_warehouse_kind": "Central Raw"}):
+                                           {"mb_warehouse_kind": "Central Raw"}):
         _ensure_company_structure(company)
     try:
         from manase_butcher.setup.number_cards import setup_number_cards
@@ -185,7 +186,7 @@ def _ensure_warehouse(company, abbr, base_name, kind, parent_base, wtype=None):
         d.parent_warehouse = parent_full
         d.is_group = 1 if kind == "group" else 0
         d.warehouse_type = wtype or ("Transit" if kind == "Transit" else "Goods")
-        d.custom_mb_warehouse_kind = kind if kind != "group" else None
+        d.mb_warehouse_kind = kind if kind != "group" else None
         d.flags.ignore_permissions = True
         d.insert()
         return d.name
@@ -357,7 +358,7 @@ def _configure_settings(company):
 
     def wh(kind):
         return frappe.db.get_value("Warehouse",
-                                   {"company": company, "custom_mb_warehouse_kind": kind}, "name")
+                                   {"company": company, "mb_warehouse_kind": kind}, "name")
 
     s.central_raw_warehouse = wh("Central Raw")
     s.central_processed_warehouse = wh("Central Processed")

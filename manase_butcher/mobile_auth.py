@@ -32,7 +32,7 @@ def find_or_create_customer(phone):
                                                      "customer_group") or "All Customer Groups",
         "territory": frappe.db.get_single_value("Selling Settings", "territory") or "All Territories",
         "mobile_no": phone,
-        "custom_mb_phone_verified": 1,
+        "mb_phone_verified": 1,
     })
     doc.flags.ignore_permissions = True
     doc.insert()

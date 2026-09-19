@@ -12,11 +12,11 @@ def execute(filters=None):
     if filters.get("customer"):
         cond.append("si.customer = %s"); values.append(filters["customer"])
     if filters.get("branch"):
-        cond.append("si.custom_mb_branch = %s"); values.append(filters["branch"])
+        cond.append("si.mb_branch = %s"); values.append(filters["branch"])
     rows = frappe.db.sql(
         f"""SELECT si.customer, c.customer_name, c.mobile_no,
                    si.name AS invoice, si.posting_date, si.due_date,
-                   si.outstanding_amount, si.custom_mb_branch AS branch
+                   si.outstanding_amount, si.mb_branch AS branch
             FROM `tabSales Invoice` si
             LEFT JOIN tabCustomer c ON c.name=si.customer
             WHERE {' AND '.join(cond)} ORDER BY si.customer, si.posting_date""",

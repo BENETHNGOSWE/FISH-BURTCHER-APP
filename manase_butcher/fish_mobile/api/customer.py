@@ -12,14 +12,14 @@ def profile():
     customer, sess = begin()
     d = frappe.db.get_value("Customer", customer,
                             ["name", "customer_name", "mobile_no", "email_id",
-                             "custom_mb_preferred_branch", "territory",
+                             "mb_preferred_branch", "territory",
                              "total_unpaid"], as_dict=True)
     return {"ok": True, "data": {
         "name": d.name, "customer_name": d.customer_name, "phone": d.mobile_no,
-        "email": d.email_id, "preferred_branch": d.custom_mb_preferred_branch,
+        "email": d.email_id, "preferred_branch": d.mb_preferred_branch,
         "outstanding": flt(d.total_unpaid),
         "verified": bool(frappe.db.get_value("Customer", customer,
-                                              "custom_mb_phone_verified")),
+                                              "mb_phone_verified")),
     }}
 
 
@@ -104,9 +104,9 @@ def payments():
                              filters={"party_type": "Customer", "party": customer,
                                       "docstatus": 1},
                              fields=["name", "posting_date", "mode_of_payment",
-                                     "custom_mb_mobile_provider as provider",
+                                     "mb_mobile_provider as provider",
                                      "paid_amount",
-                                     "custom_mb_mobile_reference as reference"],
+                                     "mb_mobile_reference as reference"],
                              order_by="posting_date desc", limit=100)
     invoices = frappe.db.get_all("Sales Invoice",
                                  filters={"customer": customer, "docstatus": 1},

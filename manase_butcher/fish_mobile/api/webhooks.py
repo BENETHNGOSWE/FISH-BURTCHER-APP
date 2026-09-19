@@ -62,7 +62,7 @@ def mobile_payment_callback(provider=None, reference=None, amount=None,
         frappe.throw("reference and amount are required")
     # replay protection
     if frappe.db.exists("Payment Entry",
-                        {"custom_mb_mobile_reference": reference, "docstatus": ["!=", 2]}):
+                        {"mb_mobile_reference": reference, "docstatus": ["!=", 2]}):
         return {"ok": True, "data": {"duplicate": True, "reference": reference}}
 
     # locate order by explicit id or account-reference mapping

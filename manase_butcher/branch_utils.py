@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Branch <-> Warehouse helpers and multi-branch permission enforcement.
 
-Every physical branch has a real ERPNext Warehouse (custom field ``custom_mb_branch``)
+Every physical branch has a real ERPNext Warehouse (custom field ``mb_branch``)
 and a Cost Center. Access for branch-scoped roles is enforced with:
 
 1. standard User Permission records on Branch / Warehouse / Cost Center;
@@ -88,7 +88,7 @@ def get_branch_cost_center(branch_name):
 def branch_for_warehouse(warehouse):
     if not warehouse:
         return None
-    return frappe.db.get_value("Warehouse", warehouse, "custom_mb_branch")
+    return frappe.db.get_value("Warehouse", warehouse, "mb_branch")
 
 
 # ---------------------------------------------------------------- SQL conditions
@@ -169,15 +169,15 @@ def _warehouse_via_child_condition(parent_table, parent_field, child_table, user
     return (f"EXISTS (SELECT 1 FROM `{child_table}` c "
             f"JOIN `tabWarehouse` w ON w.name = c.warehouse "
             f"WHERE c.{parent_field} = `{parent_table}`.name "
-            f"AND w.custom_mb_branch IN ({quoted}))")
+            f"AND w.mb_branch IN ({quoted}))")
 
 
 def sales_invoice_query_condition(user=None):
     user = user or frappe.session.user
     if user == "Administrator" or (set(frappe.get_roles(user)) & set(MONEY_BYPASS_ROLES)):
         return ""
-    return (f"`tabSales Invoice`.`custom_mb_branch` IS NOT NULL AND "
-            + _branch_subquery(user, "`tabSales Invoice`.`custom_mb_branch`")
+    return (f"`tabSales Invoice`.`mb_branch` IS NOT NULL AND "
+            + _branch_subquery(user, "`tabSales Invoice`.`mb_branch`")
             if get_user_branches(user) else "")
 
 
@@ -210,10 +210,10 @@ def stock_entry_query_condition(user=None):
         return ""
     names = get_user_branches(user)
     if not names:
-        return "(`tabStock Entry`.`custom_mb_branch` IS NULL OR `tabStock Entry`.`custom_mb_branch` = '')"
+        return "(`tabStock Entry`.`mb_branch` IS NULL OR `tabStock Entry`.`mb_branch` = '')"
     quoted = ",".join(frappe.db.escape(n) for n in names)
-    return (f"(`tabStock Entry`.`custom_mb_branch` IN ({quoted}) OR "
-            f"`tabStock Entry`.`custom_mb_branch` IS NULL OR `tabStock Entry`.`custom_mb_branch` = '')")
+    return (f"(`tabStock Entry`.`mb_branch` IN ({quoted}) OR "
+            f"`tabStock Entry`.`mb_branch` IS NULL OR `tabStock Entry`.`mb_branch` = '')")
 
 
 def payment_entry_query_condition(user=None):
@@ -222,10 +222,10 @@ def payment_entry_query_condition(user=None):
         return ""
     names = get_user_branches(user)
     if not names:
-        return "(`tabPayment Entry`.`custom_mb_branch` IS NULL OR `tabPayment Entry`.`custom_mb_branch`='')"
+        return "(`tabPayment Entry`.`mb_branch` IS NULL OR `tabPayment Entry`.`mb_branch`='')"
     quoted = ",".join(frappe.db.escape(n) for n in names)
-    return (f"(`tabPayment Entry`.`custom_mb_branch` IN ({quoted}) OR "
-            f"`tabPayment Entry`.`custom_mb_branch` IS NULL OR `tabPayment Entry`.`custom_mb_branch`='')")
+    return (f"(`tabPayment Entry`.`mb_branch` IN ({quoted}) OR "
+            f"`tabPayment Entry`.`mb_branch` IS NULL OR `tabPayment Entry`.`mb_branch`='')")
 
 
 def journal_entry_query_condition(user=None):
@@ -253,8 +253,8 @@ def _doc_branch(doc):
         return doc.branch
     if hasattr(doc, "target_branch") and doc.target_branch:
         return doc.target_branch
-    if hasattr(doc, "custom_mb_branch"):
-        return doc.custom_mb_branch
+    if hasattr(doc, "mb_branch"):
+        return doc.mb_branch
     return None
 
 

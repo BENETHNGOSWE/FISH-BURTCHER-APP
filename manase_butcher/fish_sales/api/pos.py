@@ -53,16 +53,16 @@ def get_pos_context(branch=None):
 def get_branch_items(branch, search=None, price_type="Retail"):
     _require_pos()
     warehouse = get_branch_warehouse(branch)
-    conds = ["i.disabled=0", "i.is_sales_item=1", "i.custom_mb_is_fish=1"]
+    conds = ["i.disabled=0", "i.is_sales_item=1", "i.mb_is_fish=1"]
     values = [warehouse]
     if search:
         conds.append("(i.item_name LIKE %s OR i.name LIKE %s)")
         values += [f"%{search}%", f"%{search}%"]
     rows = frappe.db.sql(
         f"""SELECT i.name AS item, i.item_name, i.image, i.stock_uom,
-                   i.custom_mb_freshness AS freshness, i.custom_mb_preparation AS preparation,
+                   i.mb_freshness AS freshness, i.mb_preparation AS preparation,
                    GREATEST(COALESCE(b.actual_qty,0)-COALESCE(b.reserved_qty,0)
-                       -COALESCE(b.custom_mb_custom_reserved_kg,0),0) AS available_kg
+                       -COALESCE(b.mb_custom_reserved_kg,0),0) AS available_kg
             FROM tabItem i LEFT JOIN tabBin b ON b.item_code=i.name AND b.warehouse=%s
             WHERE {' AND '.join(conds)}
             ORDER BY i.item_name LIMIT 200""", tuple(values), as_dict=True)
@@ -105,9 +105,9 @@ def submit_sale():
     si.update_stock = 1
     si.set_warehouse = warehouse
     si.cost_center = cost_center
-    si.custom_mb_branch = branch
-    si.custom_mb_sales_channel = data.get("channel") or "Walk-in"
-    si.custom_mb_sales_staff = frappe.db.get_value("Employee",
+    si.mb_branch = branch
+    si.mb_sales_channel = data.get("channel") or "Walk-in"
+    si.mb_sales_staff = frappe.db.get_value("Employee",
                                                    {"user_id": frappe.session.user}, "name")
     items = data.get("items") or []
     if not items:
@@ -129,7 +129,7 @@ def submit_sale():
             "discount_amount": line_discount,
             "warehouse": warehouse,
             "cost_center": cost_center,
-            "custom_mb_weight_kg": kg,
+            "mb_weight_kg": kg,
         })
     si.discount_amount = flt(data.get("discount_total"))
     si.flags.ignore_validate_update_after_submit = True
@@ -161,15 +161,15 @@ def submit_sale():
             p["payment_entry"] = pe.name
     log_action("Sales Invoice", si.name, "Submit", branch=branch,
                new_value={"total": si.grand_total,
-                          "kg": sum(flt(i.custom_mb_weight_kg or i.qty) for i in si.items)})
+                          "kg": sum(flt(i.mb_weight_kg or i.qty) for i in si.items)})
     frappe.db.commit()
     return {"ok": True, "data": {"invoice": si.name, "grand_total": si.grand_total,
                                  "outstanding": si.outstanding_amount, "payments": payments}}
 
 
 def _set_invoice_kg(si):
-    kg = sum(flt(i.custom_mb_weight_kg or i.qty) for i in si.items)
-    frappe.db.set_value("Sales Invoice", si.name, "custom_mb_total_kg", kg,
+    kg = sum(flt(i.mb_weight_kg or i.qty) for i in si.items)
+    frappe.db.set_value("Sales Invoice", si.name, "mb_total_kg", kg,
                         update_modified=False)
 
 
@@ -182,7 +182,7 @@ def _check_discount_authority(si, settings):
             and not (roles & {"Business Owner", "General Manager", "Branch Manager"}):
         frappe.throw(_("Discount exceeds your authority limit"))
     log_action("Sales Invoice", si.name, "Price Change", field_label="discount",
-               branch=si.custom_mb_branch, new_value=si.discount_amount)
+               branch=si.mb_branch, new_value=si.discount_amount)
 
 
 def _check_credit(si, payments):
@@ -239,8 +239,8 @@ def cancel_sale(invoice, reason):
                                         "System Manager", "Administrator"}):
         frappe.throw(_("Not authorised to cancel sales"), frappe.PermissionError)
     doc = frappe.get_doc("Sales Invoice", invoice)
-    assert_branch_access(doc.custom_mb_branch)
+    assert_branch_access(doc.mb_branch)
     doc.flags.ignore_permissions = True
     doc.cancel()
-    log_action("Sales Invoice", invoice, "Cancel", branch=doc.custom_mb_branch, reason=reason)
+    log_action("Sales Invoice", invoice, "Cancel", branch=doc.mb_branch, reason=reason)
     return {"ok": True}

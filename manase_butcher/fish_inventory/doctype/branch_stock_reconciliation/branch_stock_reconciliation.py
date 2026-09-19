@@ -164,7 +164,7 @@ class BranchStockReconciliation(Document):
             return
         sr.flags.ignore_permissions = True
         sr.insert()
-        sr.custom_mb_branch = self.branch
+        sr.mb_branch = self.branch
         sr.save(ignore_permissions=True)
         sr.submit()
         self.db_set("stock_reconciliation", sr.name)

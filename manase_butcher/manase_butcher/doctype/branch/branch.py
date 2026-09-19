@@ -24,8 +24,8 @@ class Branch(Document):
         self._grant_manager_permission()
         if self.warehouse:
             frappe.db.set_value("Warehouse", self.warehouse, {
-                "custom_mb_branch": self.name,
-                "custom_mb_warehouse_kind": "Branch",
+                "mb_branch": self.name,
+                "mb_warehouse_kind": "Branch",
             }, update_modified=False)
         # branch -> cost center link is maintained via Branch.cost_center field
         # (and User Permissions); no custom column on Cost Center is required.
@@ -58,8 +58,8 @@ class Branch(Document):
                 "company": self.company,
                 "parent_warehouse": self._parent_warehouse(abbr),
                 "warehouse_type": self._warehouse_type("Goods"),
-                "custom_mb_branch": self.name,
-                "custom_mb_warehouse_kind": "Branch",
+                "mb_branch": self.name,
+                "mb_warehouse_kind": "Branch",
             })
             wh.flags.ignore_permissions = True
             wh.insert()

@@ -32,7 +32,7 @@ class FishReceiving(Document):
             if row.item:
                 row.item_name = row.item_name or frappe.db.get_value("Item", row.item, "item_name")
                 if not row.species:
-                    row.species = frappe.db.get_value("Item", row.item, "custom_mb_species")
+                    row.species = frappe.db.get_value("Item", row.item, "mb_species")
 
     def _calculate_totals(self):
         self.total_qty_kg = round(sum(flt(r.qty_kg) for r in self.items), 3)
@@ -79,8 +79,8 @@ class FishReceiving(Document):
         pr.currency = self.currency
         pr.conversion_rate = flt(self.conversion_rate) or 1
         pr.set_warehouse = self.warehouse
-        pr.custom_mb_fish_receiving = self.name
-        pr.custom_mb_total_kg = self.total_qty_kg
+        pr.mb_fish_receiving = self.name
+        pr.mb_total_kg = self.total_qty_kg
         for row in self.items:
             pr.append("items", {
                 "item_code": row.item,
@@ -92,8 +92,8 @@ class FishReceiving(Document):
                 "rate": flt(row.rate),
                 "price_list_rate": flt(row.rate),
                 "warehouse": self.warehouse,
-                "custom_mb_grade": row.grade,
-                "custom_mb_freshness": row.freshness or "Fresh",
+                "mb_grade": row.grade,
+                "mb_freshness": row.freshness or "Fresh",
                 "batch_no": row.batch or None,
             })
         for cost in self.landing_costs:
@@ -137,8 +137,8 @@ class FishReceiving(Document):
                 b = frappe.new_doc("Batch")
                 b.item = row.item
                 b.batch_id = None
-                b.custom_mb_supplier = self.supplier
-                b.custom_mb_received_date = getdate(self.posting_date)
+                b.mb_supplier = self.supplier
+                b.mb_received_date = getdate(self.posting_date)
                 b.flags.ignore_permissions = True
                 b.insert()
                 row.db_set("batch", b.name)
@@ -155,7 +155,7 @@ class FishReceiving(Document):
                 fb.flags.ignore_permissions = True
                 fb.insert()
                 fb.submit()
-                b.db_set("custom_mb_fish_batch", fb.name)
+                b.db_set("mb_fish_batch", fb.name)
             except Exception:
                 frappe.log_error(title="Fish batch create failed",
                                  message=frappe.get_traceback())

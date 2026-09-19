@@ -18,9 +18,9 @@ class FishBatch(Document):
     def on_submit(self):
         if self.erpnext_batch and self.item and self.supplier:
             frappe.db.set_value("Batch", self.erpnext_batch, {
-                "custom_mb_supplier": self.supplier,
-                "custom_mb_fish_batch": self.name,
-                "custom_mb_received_date": getdate(self.received_date),
+                "mb_supplier": self.supplier,
+                "mb_fish_batch": self.name,
+                "mb_received_date": getdate(self.received_date),
             }, update_modified=False)
 
     def on_cancel(self):

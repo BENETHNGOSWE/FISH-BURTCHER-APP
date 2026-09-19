@@ -30,14 +30,14 @@ def _warehouses(filters):
         return [filters["warehouse"]]
     wfilters = {}
     if filters.get("branch"):
-        wfilters["custom_mb_branch"] = filters["branch"]
+        wfilters["mb_branch"] = filters["branch"]
     warehouses = frappe.db.get_all("Warehouse", filters=wfilters, pluck="name")
     # exclude waste/transit from combined view unless explicit
     return warehouses
 
 
 def _fish_items(filters):
-    f = {"custom_mb_is_fish": 1, "disabled": 0}
+    f = {"mb_is_fish": 1, "disabled": 0}
     if filters.get("item_code"):
         return [filters["item_code"]]
     return frappe.db.get_all("Item", filters=f, pluck="name")

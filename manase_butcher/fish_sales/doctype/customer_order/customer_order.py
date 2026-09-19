@@ -88,9 +88,9 @@ class CustomerOrder(Document):
         so.company = settings.company
         so.order_type = "Sales"
         so.set_warehouse = self.warehouse
-        so.custom_mb_branch = self.branch
-        so.custom_mb_sales_channel = "Mobile"
-        so.custom_mb_customer_order = self.name
+        so.mb_branch = self.branch
+        so.mb_sales_channel = "Mobile"
+        so.mb_customer_order = self.name
         so.po_no = self.name
         for line in self.items:
             so.append("items", {
@@ -128,8 +128,8 @@ class CustomerOrder(Document):
                 sre.voucher_detail_no = so_item.name
                 sre.company = settings.company
                 sre.posting_date = getdate()
-                if sre.meta.has_field("custom_mb_customer_order"):
-                    sre.custom_mb_customer_order = self.name
+                if sre.meta.has_field("mb_customer_order"):
+                    sre.mb_customer_order = self.name
                 sre.flags.ignore_permissions = True
                 sre.insert()
                 sre.submit()
@@ -219,10 +219,10 @@ class CustomerOrder(Document):
         si.is_pos = 0
         si.update_stock = 1
         si.set_warehouse = self.warehouse
-        si.custom_mb_branch = self.branch
-        si.custom_mb_sales_channel = "Mobile"
-        si.custom_mb_customer_order = self.name
-        si.custom_mb_total_kg = self.total_qty_kg
+        si.mb_branch = self.branch
+        si.mb_sales_channel = "Mobile"
+        si.mb_customer_order = self.name
+        si.mb_total_kg = self.total_qty_kg
         si.cost_center = get_branch_cost_center(self.branch)
         delivery_item = frappe.db.get_value("Item", {"item_name": "Delivery Fee"}, "name")
         if flt(self.delivery_fee) and delivery_item:

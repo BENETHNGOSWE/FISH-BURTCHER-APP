@@ -21,28 +21,28 @@ def _branch_warehouse(branch):
 def products_for_branch(branch, search=None, category=None, freshness=None,
                         page=0, page_size=30, include_out_of_stock=True):
     warehouse = _branch_warehouse(branch)
-    conds = ["i.disabled = 0", "i.custom_mb_sellable = 1", "i.is_sales_item = 1"]
+    conds = ["i.disabled = 0", "i.mb_sellable = 1", "i.is_sales_item = 1"]
     values = []
     if search:
         like = f"%{search}%"
         conds.append("(i.item_name LIKE %s OR i.description LIKE %s)")
         values += [like, like]
     if freshness:
-        conds.append("i.custom_mb_freshness = %s")
+        conds.append("i.mb_freshness = %s")
         values.append(freshness)
     if category:
-        conds.append("(i.custom_mb_fish_category = %s OR i.item_group = %s)")
+        conds.append("(i.mb_fish_category = %s OR i.item_group = %s)")
         values += [category, category]
     where = " AND ".join(conds)
     limit = page * page_size
     rows = frappe.db.sql(
         f"""SELECT i.name, i.item_name, i.image, i.stock_uom,
-                   i.custom_mb_species AS species, i.custom_mb_fish_category AS category,
-                   i.custom_mb_grade AS grade, i.custom_mb_size AS size,
-                   i.custom_mb_freshness AS freshness, i.custom_mb_preparation AS preparation,
+                   i.mb_species AS species, i.mb_fish_category AS category,
+                   i.mb_grade AS grade, i.mb_size AS size,
+                   i.mb_freshness AS freshness, i.mb_preparation AS preparation,
                    b.actual_qty, b.reserved_qty,
                    COALESCE(b.actual_qty,0)-COALESCE(b.reserved_qty,0)
-                       -COALESCE(b.custom_mb_custom_reserved_kg,0) AS available
+                       -COALESCE(b.mb_custom_reserved_kg,0) AS available
             FROM tabItem i
             LEFT JOIN tabBin b ON b.item_code=i.name AND b.warehouse=%s
             WHERE {where}
@@ -96,16 +96,16 @@ def get_product():
     warehouse = _branch_warehouse(branch)
     d = frappe.db.get_value("Item", item,
                             ["name", "item_name", "description", "image", "stock_uom",
-                             "custom_mb_species", "custom_mb_grade", "custom_mb_freshness",
-                             "custom_mb_preparation"], as_dict=True)
+                             "mb_species", "mb_grade", "mb_freshness",
+                             "mb_preparation"], as_dict=True)
     if not d:
         frappe.throw("Unknown product")
     available = available_kg(item, warehouse)
     return {"ok": True, "data": {
         "item": d.name, "name": d.item_name, "description": d.description,
         "image": d.image, "uom": d.stock_uom or "Kg",
-        "species": d.custom_mb_species, "grade": d.custom_mb_grade,
-        "freshness": d.custom_mb_freshness, "preparation": d.custom_mb_preparation,
+        "species": d.mb_species, "grade": d.mb_grade,
+        "freshness": d.mb_freshness, "preparation": d.mb_preparation,
         "price_per_kg": resolve_price(item, branch, "Retail"), "currency": "TZS",
         "available_kg": max(0, available),
         "status": ("in_stock" if available > LOW_STOCK_KG else

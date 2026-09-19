@@ -47,25 +47,25 @@ class DailyBranchClosing(Document):
         start, end = get_datetime(f"{day} 00:00:00"), get_datetime(f"{day} 23:59:59")
         invoices = frappe.db.sql(
             """SELECT name, grand_total, outstanding_amount FROM `tabSales Invoice`
-               WHERE custom_mb_branch=%s AND posting_date=%s AND docstatus=1 AND is_return=0""",
+               WHERE mb_branch=%s AND posting_date=%s AND docstatus=1 AND is_return=0""",
             (self.branch, day), as_dict=True)
         self.invoice_count = len(invoices)
         self.sales_total = round(sum(flt(i.grand_total) for i in invoices), 2)
         self.credit_total = round(sum(flt(i.outstanding_amount) for i in invoices), 2)
         self.kg_sold = flt(frappe.db.sql(
-            """SELECT COALESCE(SUM(sii.custom_mb_weight_kg), SUM(sii.stock_qty))
+            """SELECT COALESCE(SUM(sii.mb_weight_kg), SUM(sii.stock_qty))
                FROM `tabSales Invoice Item` sii JOIN `tabSales Invoice` si ON si.name=sii.parent
-               WHERE si.custom_mb_branch=%s AND si.posting_date=%s AND si.docstatus=1 AND si.is_return=0""",
+               WHERE si.mb_branch=%s AND si.posting_date=%s AND si.docstatus=1 AND si.is_return=0""",
             (self.branch, day))[0][0] or 0, 3)
 
         # payments grouped by mode
         pay_rows = frappe.db.sql(
-            """SELECT pe.mode_of_payment, pe.custom_mb_mobile_provider AS provider,
+            """SELECT pe.mode_of_payment, pe.mb_mobile_provider AS provider,
                      SUM(pe.paid_amount) AS amount
                FROM `tabPayment Entry` pe
-               WHERE pe.custom_mb_branch=%s AND pe.posting_date=%s AND pe.docstatus=1
+               WHERE pe.mb_branch=%s AND pe.posting_date=%s AND pe.docstatus=1
                      AND pe.payment_type='Receive'
-               GROUP BY pe.mode_of_payment, pe.custom_mb_mobile_provider""",
+               GROUP BY pe.mode_of_payment, pe.mb_mobile_provider""",
             (self.branch, day), as_dict=True)
         # invoices fully on credit (no payment) represented as Credit mode
         amounts = {(r.mode_of_payment, r.provider): flt(r.amount) for r in pay_rows}
@@ -93,7 +93,7 @@ class DailyBranchClosing(Document):
         self.closing_stock_kg = flt(frappe.db.sql(
             """SELECT COALESCE(SUM(actual_qty),0) FROM tabBin
                WHERE warehouse=%s AND item_code IN (
-                   SELECT name FROM tabItem WHERE custom_mb_is_fish=1)""",
+                   SELECT name FROM tabItem WHERE mb_is_fish=1)""",
             self.warehouse)[0][0], 3)
         self.opening_stock_kg = flt(frappe.db.sql(
             """SELECT COALESCE(SUM(q),0) FROM (

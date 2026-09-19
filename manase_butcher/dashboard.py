@@ -62,7 +62,7 @@ def today_received_kg():
 @frappe.whitelist()
 def today_sold_kg():
     v = flt(frappe.db.sql(
-        """SELECT COALESCE(SUM(sii.custom_mb_weight_kg), SUM(sii.stock_qty),0)
+        """SELECT COALESCE(SUM(sii.mb_weight_kg), SUM(sii.stock_qty),0)
            FROM `tabSales Invoice Item` sii JOIN `tabSales Invoice` si ON si.name=sii.parent
            WHERE si.posting_date=%s AND si.docstatus=1 AND si.is_return=0""", _today())[0][0])
     return {"value": v}
@@ -81,7 +81,7 @@ def current_stock_kg():
     v = flt(frappe.db.sql(
         """SELECT COALESCE(SUM(b.actual_qty),0) FROM tabBin b
            JOIN tabItem i ON i.name=b.item_code
-           WHERE i.custom_mb_is_fish=1""")[0][0])
+           WHERE i.mb_is_fish=1""")[0][0])
     return {"value": v}
 
 

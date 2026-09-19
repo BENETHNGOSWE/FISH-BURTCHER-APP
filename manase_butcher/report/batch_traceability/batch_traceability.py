@@ -38,7 +38,7 @@ def execute(filters=None):
     if erp_batch:
         moves = frappe.db.sql(
             """SELECT sle.voucher_type, sle.voucher_no, sle.warehouse, sle.actual_qty,
-                      sle.posting_date, w.custom_mb_branch AS branch, sle.item_code
+                      sle.posting_date, w.mb_branch AS branch, sle.item_code
                FROM `tabStock Ledger Entry` sle
                LEFT JOIN tabWarehouse w ON w.name=sle.warehouse
                WHERE sle.batch_no=%s AND sle.is_cancelled=0

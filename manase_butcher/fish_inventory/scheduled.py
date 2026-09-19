@@ -7,16 +7,16 @@ from frappe.utils import flt, today, add_days
 def low_stock_digest():
     """Notify branch managers / inventory manager of fish below reorder level."""
     rows = frappe.db.sql(
-        """SELECT b.warehouse, w.custom_mb_branch AS branch, b.item_code,
+        """SELECT b.warehouse, w.mb_branch AS branch, b.item_code,
                   i.item_name, GREATEST(COALESCE(b.actual_qty,0)-COALESCE(b.reserved_qty,0)
-                     -COALESCE(b.custom_mb_custom_reserved_kg,0),0) AS available,
+                     -COALESCE(b.mb_custom_reserved_kg,0),0) AS available,
                   ir.warehouse_reorder_level AS minimum
            FROM tabBin b
            JOIN tabItem i ON i.name=b.item_code
            LEFT JOIN tabWarehouse w ON w.name=b.warehouse
            LEFT JOIN `tabItem Reorder` ir
                   ON ir.parent=i.name AND ir.warehouse=b.warehouse
-           WHERE i.custom_mb_is_fish=1 AND i.disabled=0
+           WHERE i.mb_is_fish=1 AND i.disabled=0
              AND ir.warehouse_reorder_level IS NOT NULL
              AND (COALESCE(b.actual_qty,0)-COALESCE(b.reserved_qty,0)) <= ir.warehouse_reorder_level
         """, as_dict=True)
@@ -62,13 +62,13 @@ def high_waste_alert(threshold_pct=5.0):
                FROM `tabStock Ledger Entry` sle
                JOIN `tabStock Entry` se ON se.name=sle.voucher_no
                WHERE sle.warehouse=%s AND sle.is_cancelled=0
-                 AND se.custom_mb_fish_waste_record IS NOT NULL
+                 AND se.mb_fish_waste_record IS NOT NULL
                  AND sle.posting_date >= %s""", (warehouse, since))[0][0])
         sold = flt(frappe.db.sql(
-            """SELECT COALESCE(SUM(sii.custom_mb_weight_kg), SUM(sii.stock_qty),0)
+            """SELECT COALESCE(SUM(sii.mb_weight_kg), SUM(sii.stock_qty),0)
                FROM `tabSales Invoice Item` sii
                JOIN `tabSales Invoice` si ON si.name=sii.parent
-               WHERE si.custom_mb_branch=%s AND si.docstatus=1 AND si.posting_date>=%s
+               WHERE si.mb_branch=%s AND si.docstatus=1 AND si.posting_date>=%s
                  AND si.is_return=0""", (branch, since))[0][0])
         if sold > 0 and (waste / sold) * 100 >= threshold_pct:
             alerts.append((branch, waste, sold))

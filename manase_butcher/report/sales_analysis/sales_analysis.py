@@ -11,10 +11,10 @@ def execute(filters=None):
     values = []
     for field, column in (("from_date", "si.posting_date >= %s"),
                           ("to_date", "si.posting_date <= %s"),
-                          ("branch", "si.custom_mb_branch = %s"),
-                          ("sales_channel", "si.custom_mb_sales_channel = %s"),
+                          ("branch", "si.mb_branch = %s"),
+                          ("sales_channel", "si.mb_sales_channel = %s"),
                           ("customer", "si.customer = %s"),
-                          ("employee", "si.custom_mb_sales_staff = %s")):
+                          ("employee", "si.mb_sales_staff = %s")):
         if filters.get(field):
             cond.append(column); values.append(filters[field])
     item_join = ""
@@ -22,11 +22,11 @@ def execute(filters=None):
         item_join = "JOIN `tabSales Invoice Item` sif ON sif.parent=si.name AND sif.item_code=%s"
         values.insert(0, filters["item_code"])
     rows = frappe.db.sql(
-        f"""SELECT si.name, si.posting_date, si.custom_mb_branch AS branch,
-                   si.custom_mb_sales_channel AS channel, si.customer,
-                   si.custom_mb_sales_staff AS employee,
+        f"""SELECT si.name, si.posting_date, si.mb_branch AS branch,
+                   si.mb_sales_channel AS channel, si.customer,
+                   si.mb_sales_staff AS employee,
                    sii.item_code, sii.item_name,
-                   sii.custom_mb_weight_kg AS kg, sii.stock_qty,
+                   sii.mb_weight_kg AS kg, sii.stock_qty,
                    sii.net_amount, sii.discount_amount
             FROM `tabSales Invoice` si
             JOIN `tabSales Invoice Item` sii ON sii.parent=si.name

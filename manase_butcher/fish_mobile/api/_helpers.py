@@ -53,7 +53,7 @@ def rate_limit(key, limit, window=60):
 
 def public_customer_payload(name):
     customer, phone, preferred = frappe.db.get_value(
-        "Customer", name, ["name", "mobile_no", "custom_mb_preferred_branch"])
+        "Customer", name, ["name", "mobile_no", "mb_preferred_branch"])
     return {
         "name": customer,
         "phone": phone,

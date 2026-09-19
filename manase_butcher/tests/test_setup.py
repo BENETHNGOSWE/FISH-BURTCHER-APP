@@ -22,7 +22,7 @@ class TestSetup(FrappeTestCase):
             self.assertTrue(
                 frappe.db.get_value("Warehouse",
                                    {"company": company,
-                                    "custom_mb_warehouse_kind": kind}, "name"),
+                                    "mb_warehouse_kind": kind}, "name"),
                 kind)
 
     def test_branch_provisions_warehouse_and_cost_center(self):
@@ -33,4 +33,4 @@ class TestSetup(FrappeTestCase):
         self.assertTrue(branch.warehouse)
         self.assertTrue(branch.cost_center)
         self.assertEqual(
-            frappe.db.get_value("Warehouse", branch.warehouse, "custom_mb_branch"), name)
+            frappe.db.get_value("Warehouse", branch.warehouse, "mb_branch"), name)

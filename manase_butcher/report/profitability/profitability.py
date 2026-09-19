@@ -15,13 +15,13 @@ def execute(filters=None):
         cc = frappe.db.get_value("Branch", branch, "cost_center")
         revenue = _sum(
             """SELECT COALESCE(SUM(base_net_amount),0) FROM `tabSales Invoice`
-               WHERE custom_mb_branch=%s AND docstatus=1 AND is_return=0
+               WHERE mb_branch=%s AND docstatus=1 AND is_return=0
                AND (%s IS NULL OR posting_date>=%s) AND (%s IS NULL OR posting_date<=%s)""",
             (branch, start, start, end, end))
         kg = _sum(
-            """SELECT COALESCE(SUM(sii.custom_mb_weight_kg),SUM(sii.stock_qty),0)
+            """SELECT COALESCE(SUM(sii.mb_weight_kg),SUM(sii.stock_qty),0)
                FROM `tabSales Invoice Item` sii JOIN `tabSales Invoice` si ON si.name=sii.parent
-               WHERE si.custom_mb_branch=%s AND si.docstatus=1 AND si.is_return=0
+               WHERE si.mb_branch=%s AND si.docstatus=1 AND si.is_return=0
                AND (%s IS NULL OR si.posting_date>=%s) AND (%s IS NULL OR si.posting_date<=%s)""",
             (branch, start, start, end, end))
         cogs = _cogs_from_sle(branch, start, end, filters.get("item_code"),
@@ -63,7 +63,7 @@ def _cogs_from_sle(branch, start, end, item, channel):
     if start: cond.append("sle.posting_date>=%s"); vals.append(start)
     if end: cond.append("sle.posting_date<=%s"); vals.append(end)
     if item: cond.append("sle.item_code=%s"); vals.append(item)
-    if channel: cond.append("si.custom_mb_sales_channel=%s"); vals.append(channel)
+    if channel: cond.append("si.mb_sales_channel=%s"); vals.append(channel)
     row = frappe.db.sql(
         f"""SELECT COALESCE(SUM(ABS(sle.stock_value_difference)),0)
             FROM `tabStock Ledger Entry` sle

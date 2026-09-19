@@ -5,8 +5,8 @@ from frappe.utils import now_datetime
 
 
 def before_item_price_insert(doc, method=None):
-    if not doc.get("custom_mb_price_type"):
-        doc.custom_mb_price_type = "Retail"
+    if not doc.get("mb_price_type"):
+        doc.mb_price_type = "Retail"
 
 
 def item_price_on_update(doc, method=None):
@@ -19,8 +19,8 @@ def item_price_on_update(doc, method=None):
                 "changed_by": frappe.session.user,
                 "item": doc.item_code,
                 "item_name": doc.item_name,
-                "branch": doc.custom_mb_branch,
-                "price_type": doc.custom_mb_price_type or "Retail",
+                "branch": doc.mb_branch,
+                "price_type": doc.mb_price_type or "Retail",
                 "currency": doc.currency,
                 "old_price": before.price_list_rate,
                 "new_price": doc.price_list_rate,
@@ -48,11 +48,11 @@ def resolve_price(item_code, branch=None, price_type="Retail", customer=None, qt
     }
     currency = settings.default_currency or "TZS"
     # 1. special / branch specific price
-    conditions = {"item_code": item_code, "custom_mb_price_type": price_type}
+    conditions = {"item_code": item_code, "mb_price_type": price_type}
     if branch:
         row = frappe.db.get_value(
             "Item Price",
-            dict(conditions, custom_mb_branch=branch, selling=1),
+            dict(conditions, mb_branch=branch, selling=1),
             "price_list_rate")
         if row:
             return flt(row)
@@ -62,7 +62,7 @@ def resolve_price(item_code, branch=None, price_type="Retail", customer=None, qt
         row = frappe.db.get_value(
             "Item Price",
             {"item_code": item_code, "price_list": pl, "selling": 1,
-             "custom_mb_branch": ["is", "not set"]},
+             "mb_branch": ["is", "not set"]},
             "price_list_rate", order_by="valid_from desc")
         if row:
             return flt(row)

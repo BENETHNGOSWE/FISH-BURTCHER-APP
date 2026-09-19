@@ -60,11 +60,11 @@ def make_payment_entry(company, payment_type, paid_amount, party_type=None, part
     pe.flags.ignore_permissions = True
     pe.insert()
     if branch:
-        pe.custom_mb_branch = branch
+        pe.mb_branch = branch
     if mobile_provider:
-        pe.custom_mb_mobile_provider = mobile_provider
+        pe.mb_mobile_provider = mobile_provider
     if mobile_reference:
-        pe.custom_mb_mobile_reference = mobile_reference
+        pe.mb_mobile_reference = mobile_reference
     pe.save(ignore_permissions=True)
     if submit:
         pe.submit()
@@ -95,7 +95,7 @@ def make_journal_entry(company, accounts, posting_date=None, user_remark=None,
     je.flags.ignore_permissions = True
     je.insert()
     if branch:
-        je.custom_mb_branch = branch
+        je.mb_branch = branch
     je.save(ignore_permissions=True)
     if submit:
         je.submit()

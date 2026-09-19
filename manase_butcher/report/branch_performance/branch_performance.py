@@ -21,14 +21,14 @@ def execute(filters=None):
         row = {"branch": branch}
         row["sales"] = _scalar(
             """SELECT COALESCE(SUM(si.base_net_amount),0) FROM `tabSales Invoice` si
-               WHERE si.custom_mb_branch=%s AND si.docstatus=1 AND si.is_return=0
+               WHERE si.mb_branch=%s AND si.docstatus=1 AND si.is_return=0
                  AND (%(s)s IS NULL OR si.posting_date >= %(s)s)
                  AND (%(e)s IS NULL OR si.posting_date <= %(e)s)""",
             (branch,), {"s": start, "e": end})
         row["kg_sold"] = _scalar(
-            """SELECT COALESCE(SUM(sii.custom_mb_weight_kg), SUM(sii.stock_qty),0)
+            """SELECT COALESCE(SUM(sii.mb_weight_kg), SUM(sii.stock_qty),0)
                FROM `tabSales Invoice Item` sii JOIN `tabSales Invoice` si ON si.name=sii.parent
-               WHERE si.custom_mb_branch=%s AND si.docstatus=1 AND si.is_return=0
+               WHERE si.mb_branch=%s AND si.docstatus=1 AND si.is_return=0
                  AND (%(s)s IS NULL OR si.posting_date >= %(s)s)
                  AND (%(e)s IS NULL OR si.posting_date <= %(e)s)""",
             (branch,), {"s": start, "e": end})
@@ -44,7 +44,7 @@ def execute(filters=None):
         row["net_profit"] = flt(row["gross_profit"]) - flt(row["expenses"])
         row["receivables"] = flt(frappe.db.sql(
             "SELECT COALESCE(SUM(outstanding_amount),0) FROM `tabSales Invoice` "
-            "WHERE custom_mb_branch=%s AND docstatus=1", branch)[0][0])
+            "WHERE mb_branch=%s AND docstatus=1", branch)[0][0])
         data.append(row)
     columns = [
         {"fieldname": "branch", "label": "Branch", "fieldtype": "Link", "options": "Branch", "width": 150},

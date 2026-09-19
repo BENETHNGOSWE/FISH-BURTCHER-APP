@@ -56,10 +56,10 @@ def register_push(fcm_token=None, platform=None):
 def _customer_brief(customer):
     d = frappe.db.get_value("Customer", customer,
                             ["name", "customer_name", "mobile_no",
-                             "custom_mb_preferred_branch"], as_dict=True)
+                             "mb_preferred_branch"], as_dict=True)
     return {
         "name": d.name,
         "customer_name": d.customer_name,
         "phone": d.mobile_no,
-        "preferred_branch": d.custom_mb_preferred_branch,
+        "preferred_branch": d.mb_preferred_branch,
     }

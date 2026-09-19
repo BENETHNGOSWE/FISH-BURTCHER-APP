@@ -32,8 +32,8 @@ def _adjust_bin_reserved(item, warehouse, delta):
         bin_name = frappe.db.get_value("Bin", {"item_code": item, "warehouse": warehouse})
         if not bin_name:
             return
-        current = flt(frappe.db.get_value("Bin", bin_name, "custom_mb_custom_reserved_kg"))
-        frappe.db.set_value("Bin", bin_name, "custom_mb_custom_reserved_kg",
+        current = flt(frappe.db.get_value("Bin", bin_name, "mb_custom_reserved_kg"))
+        frappe.db.set_value("Bin", bin_name, "mb_custom_reserved_kg",
                             max(0, current + flt(delta)), update_modified=False)
     except Exception:
         frappe.log_error(title="Custom reservation bin update failed",

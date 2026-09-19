@@ -17,7 +17,7 @@ def get_bin_qty(item_code, warehouse):
         "Bin",
         {"item_code": item_code, "warehouse": warehouse},
         ("actual_qty", "reserved_qty", "ordered_qty", "projected_qty",
-         "custom_mb_custom_reserved_kg"),
+         "mb_custom_reserved_kg"),
         as_dict=True,
     )
     if not row:
@@ -107,11 +107,11 @@ def make_stock_entry(purpose, items, company=None, posting_date=None, posting_ti
             row["basic_rate"] = get_valuation_rate(args["item"], args["s_warehouse"])
         se.append("items", row)
     if branch:
-        se.custom_mb_branch = branch
+        se.mb_branch = branch
     if from_doctype and from_docname:
-        se.custom_mb_stage = stage
+        se.mb_stage = stage
     if stage:
-        se.custom_mb_stage = stage
+        se.mb_stage = stage
     if additional_costs:
         for c in additional_costs:
             se.append("additional_costs", {
@@ -123,11 +123,11 @@ def make_stock_entry(purpose, items, company=None, posting_date=None, posting_ti
     se.insert(ignore_permissions=True)
     # back-link stamped after insert (custom fields exist on Stock Entry)
     if from_doctype == "Fish Processing":
-        se.custom_mb_fish_processing = from_docname
+        se.mb_fish_processing = from_docname
     elif from_doctype == "Fish Waste Record":
-        se.custom_mb_fish_waste_record = from_docname
+        se.mb_fish_waste_record = from_docname
     elif from_doctype == "Fish Stock Transfer":
-        se.custom_mb_fish_transfer = from_docname
+        se.mb_fish_transfer = from_docname
     se.save(ignore_permissions=True)
     if submit:
         se.submit()
@@ -197,10 +197,10 @@ def _sre_names_for_order(order, customer_order_name=None):
     names = []
     if frappe.db.exists("DocType", "Stock Reservation Entry"):
         if customer_order_name and frappe.db.has_column(
-                "Stock Reservation Entry", "custom_mb_customer_order"):
+                "Stock Reservation Entry", "mb_customer_order"):
             names += frappe.db.get_all(
                 "Stock Reservation Entry",
-                {"custom_mb_customer_order": customer_order_name, "docstatus": ["<", 2]},
+                {"mb_customer_order": customer_order_name, "docstatus": ["<", 2]},
                 pluck="name")
         if order and order.sales_order:
             # field name varies across ERPNext builds: voucher_type / from_voucher_type
@@ -244,10 +244,10 @@ def _decrement_custom_reserved_bin(order):
         try:
             current = frappe.db.get_value("Bin",
                 {"item_code": r.item, "warehouse": r.warehouse},
-                ["name", "custom_mb_custom_reserved_kg"], as_dict=True)
+                ["name", "mb_custom_reserved_kg"], as_dict=True)
             if current:
-                frappe.db.set_value("Bin", current.name, "custom_mb_custom_reserved_kg",
-                                    max(0, flt(current.custom_mb_custom_reserved_kg) - flt(r.reserved_kg)))
+                frappe.db.set_value("Bin", current.name, "mb_custom_reserved_kg",
+                                    max(0, flt(current.mb_custom_reserved_kg) - flt(r.reserved_kg)))
         except Exception:
             frappe.log_error(title="Bin reserved release failed", message=frappe.get_traceback())
 
@@ -286,8 +286,8 @@ def movement_kg(item_code, warehouses, start, end):
     rows = frappe.db.sql(
         """
         SELECT sle.actual_qty, sle.voucher_type, sle.voucher_no,
-               se.purpose, se.custom_mb_stage AS stage,
-               si.is_return, se.custom_mb_fish_waste_record AS waste_doc,
+               se.purpose, se.mb_stage AS stage,
+               si.is_return, se.mb_fish_waste_record AS waste_doc,
                sle.warehouse
         FROM `tabStock Ledger Entry` sle
         LEFT JOIN `tabStock Entry` se ON se.name = sle.voucher_no

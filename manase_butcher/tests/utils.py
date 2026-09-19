@@ -31,7 +31,7 @@ def ensure_company():
                         ("Transit", "transit_warehouse"),
                         ("Processing", "processing_warehouse")):
         wh = frappe.db.get_value("Warehouse",
-                                 {"company": COMPANY, "custom_mb_warehouse_kind": kind}, "name")
+                                 {"company": COMPANY, "mb_warehouse_kind": kind}, "name")
         setattr(s, field, wh)
     s.save(ignore_permissions=True)
     return COMPANY
@@ -54,11 +54,11 @@ def ensure_species_and_items():
             "is_stock_item": 1,
             "is_sales_item": 1,
             "standard_selling_rate": rate,
-            "custom_mb_is_fish": 1,
-            "custom_mb_species": "Red Snapper",
-            "custom_mb_freshness": "Fresh",
-            "custom_mb_preparation": preparation,
-            "custom_mb_sellable": preparation != "Whole",
+            "mb_is_fish": 1,
+            "mb_species": "Red Snapper",
+            "mb_freshness": "Fresh",
+            "mb_preparation": preparation,
+            "mb_sellable": preparation != "Whole",
         })
         d.flags.ignore_permissions = True
         d.insert()
@@ -75,7 +75,7 @@ def ensure_supplier(name="Test Fisherman"):
         return name
     d = frappe.get_doc({"doctype": "Supplier", "supplier_name": name,
                         "supplier_group": "All Supplier Groups",
-                        "custom_mb_supplier_kind": "Fisherman"})
+                        "mb_supplier_kind": "Fisherman"})
     d.flags.ignore_permissions = True
     d.insert()
     return d.name

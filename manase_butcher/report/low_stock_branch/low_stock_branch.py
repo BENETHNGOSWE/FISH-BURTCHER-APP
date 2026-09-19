@@ -7,20 +7,20 @@ from frappe.utils import flt
 
 def execute(filters=None):
     filters = filters or {}
-    cond = ["i.custom_mb_is_fish=1", "i.disabled=0",
+    cond = ["i.mb_is_fish=1", "i.disabled=0",
             "ir.warehouse_reorder_level IS NOT NULL", "ir.warehouse_reorder_level > 0"]
     vals = []
     if filters.get("branch"):
-        cond.append("w.custom_mb_branch=%s"); vals.append(filters["branch"])
+        cond.append("w.mb_branch=%s"); vals.append(filters["branch"])
     rows = frappe.db.sql(
-        f"""SELECT w.custom_mb_branch AS branch, b.warehouse, b.item_code,
+        f"""SELECT w.mb_branch AS branch, b.warehouse, b.item_code,
                    i.item_name, ir.warehouse_reorder_level AS minimum,
                    ir.warehouse_reorder_qty AS maximum,
                    GREATEST(COALESCE(b.actual_qty,0)-COALESCE(b.reserved_qty,0)
-                       -COALESCE(b.custom_mb_custom_reserved_kg,0),0) AS available_kg,
+                       -COALESCE(b.mb_custom_reserved_kg,0),0) AS available_kg,
                    COALESCE((SELECT COALESCE(SUM(b2.actual_qty),0) FROM tabBin b2
                       JOIN tabWarehouse w2 ON w2.name=b2.warehouse
-                      WHERE b2.item_code=b.item_code AND w2.custom_mb_warehouse_kind
+                      WHERE b2.item_code=b.item_code AND w2.mb_warehouse_kind
                       IN ('Central Processed','Central Raw')),0) AS central_kg
             FROM tabBin b
             JOIN tabItem i ON i.name=b.item_code
