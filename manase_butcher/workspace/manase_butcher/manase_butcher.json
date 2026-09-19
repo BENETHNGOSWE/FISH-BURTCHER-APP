@@ -15,7 +15,7 @@
  "extends_another_page": 0,
  "extends": "",
  "hide_custom": 0,
- "content": "[{\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Open Transfers\", \"label\": \"MB Open Transfers\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Pending Mobile Orders\", \"label\": \"MB Pending Mobile Orders\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Supplier Debt\", \"label\": \"MB Supplier Debt\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Customer Debt\", \"label\": \"MB Customer Debt\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Current Stock KG\", \"label\": \"MB Current Stock KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Waste KG\", \"label\": \"MB Fish Waste KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Sold KG\", \"label\": \"MB Fish Sold KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Fish Received KG\", \"label\": \"MB Fish Received KG\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Gross Profit\", \"label\": \"MB Today Gross Profit\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Expenses\", \"label\": \"MB Today Expenses\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Purchases\", \"label\": \"MB Today Purchases\"}}, {\"type\": \"Number Card\", \"data\": {\"number_card_name\": \"MB Today Sales\", \"label\": \"MB Today Sales\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Today\", \"hidden\": 0, \"card_name\": \"Today\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Operations\", \"hidden\": 0, \"card_name\": \"Operations\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Key Reports\", \"hidden\": 0, \"card_name\": \"Key Reports\"}}, {\"type\": \"Card Break\", \"data\": {\"label\": \"Setup\", \"hidden\": 0, \"card_name\": \"Setup\"}}]",
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"MANASE BUTCHER\",\"level\":2,\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"KG-first fish supply, processing, branches, sales and reconciliation.\",\"level\":5,\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"Operations\",\"level\":4,\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Receiving\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Processing\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Stock Transfer\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Branch Stock Reconciliation\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Waste Records\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Batches\",\"col\":4}},{\"type\":\"header\",\"data\":{\"text\":\"Sales and Finance\",\"level\":4,\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer Orders\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoices\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Expenses\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Daily Branch Closing\",\"col\":4}},{\"type\":\"header\",\"data\":{\"text\":\"Setup and Control\",\"level\":4,\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Branches\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Species\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Manase Butcher Settings\",\"col\":4}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Audit Log\",\"col\":4}}]",
  "links": [
   {
    "type": "Page",
@@ -273,7 +273,120 @@
    "name": "MB Open Transfers"
   }
  ],
- "shortcuts": [],
+ "shortcuts": [
+  {
+   "label": "Fish Receiving",
+   "type": "DocType",
+   "link_to": "Fish Receiving",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Processing",
+   "type": "DocType",
+   "link_to": "Fish Processing",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Stock Transfer",
+   "type": "DocType",
+   "link_to": "Fish Stock Transfer",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Branch Stock Reconciliation",
+   "type": "DocType",
+   "link_to": "Branch Stock Reconciliation",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Waste Records",
+   "type": "DocType",
+   "link_to": "Fish Waste Record",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Batches",
+   "type": "DocType",
+   "link_to": "Fish Batch",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Customer Orders",
+   "type": "DocType",
+   "link_to": "Customer Order",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Sales Invoices",
+   "type": "DocType",
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Expenses",
+   "type": "DocType",
+   "link_to": "Fish Expense",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Daily Branch Closing",
+   "type": "DocType",
+   "link_to": "Daily Branch Closing",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Branches",
+   "type": "DocType",
+   "link_to": "Branch",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Species",
+   "type": "DocType",
+   "link_to": "Fish Species",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Manase Butcher Settings",
+   "type": "DocType",
+   "link_to": "Manase Butcher Settings",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Audit Log",
+   "type": "DocType",
+   "link_to": "Audit Log",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  }
+ ],
  "pin_to_bottom": 0,
  "pin_to_top": true,
  "selector": "",

@@ -167,7 +167,18 @@ def _sync_workspaces():
             doc.set("links", [])
             for row in valid_links:
                 doc.append("links", row)
-            doc.set("content", "[]")
+
+            # Workspace 2.0 layout: content blocks must have matching
+            # Workspace Shortcut child rows for Frappe v16 to render them.
+            doc.set("shortcuts", [])
+            for shortcut in data.get("shortcuts", []):
+                target = shortcut.get("link_to")
+                link_type = shortcut.get("link_type") or "DocType"
+                if target and frappe.db.exists(link_type, target):
+                    row = dict(shortcut)
+                    row.pop("col", None)
+                    doc.append("shortcuts", row)
+            doc.set("content", data.get("content", "[]"))
             doc.set("number_cards", [])
             doc.flags.ignore_permissions = True
             if doc.is_new():
