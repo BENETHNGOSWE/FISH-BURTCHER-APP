@@ -102,11 +102,8 @@ def after_migrate(*args, **kwargs):
 
 
 def _ensure_desktop_icon():
-    """Add MANASE BUTCHER to the Frappe v16 home launcher."""
-    if frappe.db.exists("Desktop Icon", "MANASE BUTCHER"):
-        return
-    doc = frappe.get_doc({
-        "doctype": "Desktop Icon",
+    """Add/update MANASE BUTCHER in the Frappe v16 home launcher."""
+    values = {
         "label": "MANASE BUTCHER",
         "icon_type": "App",
         "link_type": "External",
@@ -115,12 +112,20 @@ def _ensure_desktop_icon():
         "standard": 1,
         "app": "manase_butcher",
         "icon": "fish",
+        "link": "/desk/manase-butcher",
         "hidden": 0,
         "restrict_removal": 0,
         "bg_color": "blue",
-    })
-    doc.flags.ignore_permissions = True
-    doc.insert(ignore_permissions=True)
+    }
+    if frappe.db.exists("Desktop Icon", "MANASE BUTCHER"):
+        doc = frappe.get_doc("Desktop Icon", "MANASE BUTCHER")
+        doc.update(values)
+        doc.flags.ignore_permissions = True
+        doc.save(ignore_permissions=True)
+    else:
+        doc = frappe.get_doc({"doctype": "Desktop Icon", **values})
+        doc.flags.ignore_permissions = True
+        doc.insert(ignore_permissions=True)
 
 
 def _sync_workspaces():
