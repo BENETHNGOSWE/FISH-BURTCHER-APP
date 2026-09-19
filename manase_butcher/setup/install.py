@@ -115,6 +115,7 @@ def _sync_workspaces():
             # exist and can be validated safely.
             data["links"] = []
             data["content"] = "[]"
+            data["number_cards"] = []
             doc = frappe.get_doc(data)
             doc.flags.ignore_permissions = True
             doc.insert(ignore_permissions=True)
