@@ -88,9 +88,11 @@ def after_migrate(*args, **kwargs):
     setup_custom_fields()
     _ensure_warehouse_types()
     company = _default_company()
-    if company and not frappe.db.get_value("Warehouse",
-                                           {"mb_warehouse_kind": "Central Raw"}):
+    if company:
+        # Idempotently complete any missing warehouses, accounts, payment modes,
+        # and price lists, then refresh all Settings links from the live records.
         _ensure_company_structure(company)
+        _configure_settings(company)
     _sync_workspaces()
     _ensure_desktop_icon()
     try:
