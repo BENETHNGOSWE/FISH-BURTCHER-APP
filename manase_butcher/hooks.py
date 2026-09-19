@@ -32,10 +32,17 @@ before_uninstall = "manase_butcher.setup.install.before_uninstall"
 
 # Fixtures
 # --------
-# Workspaces/Reports/Pages ship as standard module-folder JSON and are synced
-# automatically on install/migrate; Workflow approvals are handled in controllers
-# (status fields + role-checked on_update_after_submit transitions).
-fixtures = []
+# Workspace records are synced so MANASE BUTCHER appears in the launcher.
+# Workflow approvals are handled in controllers (status fields + role-checked
+# on_update_after_submit transitions), so no Workflow fixtures are required.
+fixtures = [
+    {
+        "dt": "Workspace",
+        "filters": [["module", "in", [
+            "Manase Butcher", "Fish Inventory", "Fish Sales", "Fish Mobile"
+        ]]],
+    },
+]
 
 # Role permission helpers (branch-level data isolation)
 # -----------------------------------------------------
