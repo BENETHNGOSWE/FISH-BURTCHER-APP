@@ -71,6 +71,7 @@ def after_install(*args, **kwargs):
             _ensure_default_branches(company)
             _configure_settings(company)
         _sync_workspaces()
+        _ensure_desktop_icon()
         try:
             from manase_butcher.setup.number_cards import setup_number_cards
             setup_number_cards()
@@ -91,12 +92,35 @@ def after_migrate(*args, **kwargs):
                                            {"mb_warehouse_kind": "Central Raw"}):
         _ensure_company_structure(company)
     _sync_workspaces()
+    _ensure_desktop_icon()
     try:
         from manase_butcher.setup.number_cards import setup_number_cards
         setup_number_cards()
     except Exception:
         frappe.log_error(title="Number cards setup failed", message=frappe.get_traceback())
     frappe.db.commit()
+
+
+def _ensure_desktop_icon():
+    """Add MANASE BUTCHER to the Frappe v16 home launcher."""
+    if frappe.db.exists("Desktop Icon", "MANASE BUTCHER"):
+        return
+    doc = frappe.get_doc({
+        "doctype": "Desktop Icon",
+        "label": "MANASE BUTCHER",
+        "icon_type": "Link",
+        "link_type": "Workspace Sidebar",
+        "link_to": "MANASE BUTCHER",
+        "parent_icon": "",
+        "standard": 1,
+        "app": "manase_butcher",
+        "icon": "fish",
+        "hidden": 0,
+        "restrict_removal": 0,
+        "bg_color": "blue",
+    })
+    doc.flags.ignore_permissions = True
+    doc.insert(ignore_permissions=True)
 
 
 def _sync_workspaces():
