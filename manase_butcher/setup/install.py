@@ -5,6 +5,9 @@ after_install: roles, UOMs, item groups, warehouse tree, cost centers,
 accounts, modes of payment, price lists, default branches, settings.
 after_migrate : roles + custom fields + structural records (safe to repeat).
 """
+import json
+from pathlib import Path
+
 import frappe
 from frappe.utils import nowtime, today
 
@@ -67,6 +70,7 @@ def after_install(*args, **kwargs):
             _ensure_company_structure(company)
             _ensure_default_branches(company)
             _configure_settings(company)
+        _sync_workspaces()
         try:
             from manase_butcher.setup.number_cards import setup_number_cards
             setup_number_cards()
@@ -86,12 +90,32 @@ def after_migrate(*args, **kwargs):
     if company and not frappe.db.get_value("Warehouse",
                                            {"mb_warehouse_kind": "Central Raw"}):
         _ensure_company_structure(company)
+    _sync_workspaces()
     try:
         from manase_butcher.setup.number_cards import setup_number_cards
         setup_number_cards()
     except Exception:
         frappe.log_error(title="Number cards setup failed", message=frappe.get_traceback())
     frappe.db.commit()
+
+
+def _sync_workspaces():
+    """Create standard MANASE workspaces when fixture sync skips workspace JSON."""
+    root = Path(__file__).resolve().parents[1] / "workspace"
+    if not root.exists():
+        return
+    for path in sorted(root.glob("*/*.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            name = data.get("name")
+            if not name or frappe.db.exists("Workspace", name):
+                continue
+            doc = frappe.get_doc(data)
+            doc.flags.ignore_permissions = True
+            doc.insert(ignore_permissions=True)
+        except Exception:
+            frappe.log_error(title=f"Workspace sync failed: {path.name}",
+                             message=frappe.get_traceback())
 
 
 def before_uninstall(*args, **kwargs):
