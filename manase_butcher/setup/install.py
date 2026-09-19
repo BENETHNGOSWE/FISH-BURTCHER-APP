@@ -110,6 +110,10 @@ def _sync_workspaces():
             name = data.get("name")
             if not name or frappe.db.exists("Workspace", name):
                 continue
+            # Frappe v16 validates workspace links strictly. Create the public
+            # workspace first; links are added later once their target records
+            # exist and can be validated safely.
+            data["links"] = []
             doc = frappe.get_doc(data)
             doc.flags.ignore_permissions = True
             doc.insert(ignore_permissions=True)

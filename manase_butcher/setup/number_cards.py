@@ -29,7 +29,7 @@ def setup_number_cards():
                 "label": label,
                 "document_type": doctype,
                 "type": "Custom",
-                "function": function,
+                "method": function,
                 "is_standard": 0,
                 "show_percentage_stats": 0,
             })
