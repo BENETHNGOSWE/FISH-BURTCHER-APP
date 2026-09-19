@@ -109,6 +109,12 @@ CUSTOM_FIELDS = {
          "options": "Retail\nWholesale\nRestaurant\nHotel\nSpecial\nBranch",
          "default": "Retail"},
     ],
+    # ERPNext v16 party lookup expects this Contact column on some builds;
+    # add it idempotently when the standard schema is missing it.
+    "Contact": [
+        {"fieldname": "is_billing_contact", "label": "Is Billing Contact",
+         "fieldtype": "Check", "insert_after": "is_primary_contact", "default": "0"},
+    ],
     "Customer": [
         {"fieldname": "mb_preferred_branch", "label": "Preferred Branch", "fieldtype": "Link",
          "options": "Branch"},
