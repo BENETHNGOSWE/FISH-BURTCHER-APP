@@ -129,25 +129,51 @@ def _ensure_desktop_icon():
 
 
 def _sync_workspaces():
-    """Create standard MANASE workspaces when fixture sync skips workspace JSON."""
+    """Provision MANASE workspaces using Frappe v16-valid shortcut rows."""
     root = Path(__file__).resolve().parents[1] / "workspace"
     if not root.exists():
         return
+    custom_names = {
+        "MANASE BUTCHER", "Fish Inventory", "Fish Sales", "Fish Settings",
+        "Fish Purchases", "Fish Reports", "Branches",
+    }
     for path in sorted(root.glob("*/*.json")):
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
             name = data.get("name")
-            if not name or frappe.db.exists("Workspace", name):
+            if not name or name not in custom_names:
                 continue
-            # Frappe v16 validates workspace links strictly. Create the public
-            # workspace first; links are added later once their target records
-            # exist and can be validated safely.
-            data["links"] = []
-            data["content"] = "[]"
-            data["number_cards"] = []
-            doc = frappe.get_doc(data)
+
+            if frappe.db.exists("Workspace", name):
+                doc = frappe.get_doc("Workspace", name)
+            else:
+                doc = frappe.get_doc(data)
+
+            # Frappe v16 validates Workspace Link.type as Link/Card Break and
+            # validates every target. Keep only currently valid links and use
+            # an empty content/number-card layout until the links are saved.
+            valid_links = []
+            for link in data.get("links", []):
+                link_type = link.get("link_type") or "DocType"
+                target = link.get("link_to")
+                if not target or link_type not in {"DocType", "Report", "Page", "Dashboard"}:
+                    continue
+                if not frappe.db.exists(link_type, target):
+                    continue
+                row = dict(link)
+                row["type"] = "Link"
+                valid_links.append(row)
+
+            doc.set("links", [])
+            for row in valid_links:
+                doc.append("links", row)
+            doc.set("content", "[]")
+            doc.set("number_cards", [])
             doc.flags.ignore_permissions = True
-            doc.insert(ignore_permissions=True)
+            if doc.is_new():
+                doc.insert(ignore_permissions=True)
+            else:
+                doc.save(ignore_permissions=True)
         except Exception:
             frappe.log_error(title=f"Workspace sync failed: {path.name}",
                              message=frappe.get_traceback())
