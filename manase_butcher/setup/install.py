@@ -114,6 +114,7 @@ def _sync_workspaces():
             # workspace first; links are added later once their target records
             # exist and can be validated safely.
             data["links"] = []
+            data["content"] = "[]"
             doc = frappe.get_doc(data)
             doc.flags.ignore_permissions = True
             doc.insert(ignore_permissions=True)
