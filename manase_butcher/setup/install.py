@@ -108,9 +108,9 @@ def _ensure_desktop_icon():
     doc = frappe.get_doc({
         "doctype": "Desktop Icon",
         "label": "MANASE BUTCHER",
-        "icon_type": "Link",
-        "link_type": "Workspace Sidebar",
-        "link_to": "MANASE BUTCHER",
+        "icon_type": "App",
+        "link_type": "External",
+        "link_to": None,
         "parent_icon": "",
         "standard": 1,
         "app": "manase_butcher",
