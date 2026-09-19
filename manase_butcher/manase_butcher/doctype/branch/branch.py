@@ -58,7 +58,9 @@ class Branch(Document):
                 "company": self.company,
                 "parent_warehouse": self._parent_warehouse(abbr),
                 "warehouse_type": self._warehouse_type("Goods"),
-                "mb_branch": self.name,
+                # A new Branch is not in the database until after validation;
+                # assigning its Link here fails link validation. on_update()
+                # stamps mb_branch after the Branch row exists.
                 "mb_warehouse_kind": "Branch",
             })
             wh.flags.ignore_permissions = True
