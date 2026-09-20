@@ -82,8 +82,8 @@ def _se_item(args):
         row["allow_zero_valuation_rate"] = 1
     if args.get("is_finished_item"):
         row["is_finished_item"] = 1
-    if args.get("is_scrap_item"):
-        row["is_scrap_item"] = 1
+    if args.get("is_legacy_scrap_item"):
+        row["is_legacy_scrap_item"] = 1
     return row
 
 

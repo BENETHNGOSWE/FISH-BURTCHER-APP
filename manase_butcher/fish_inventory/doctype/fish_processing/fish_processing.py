@@ -93,7 +93,9 @@ class FishProcessing(Document):
                 "t_warehouse": target,
                 "rate": flt(r.valuation_rate) or 0,
                 "is_finished_item": 1 if is_finished else 0,
-                "is_scrap_item": 1 if r.is_waste else 0,
+                # ERPNext v16 uses the legacy scrap flag in Manufacture
+                # validation for by-product rows.
+                "is_legacy_scrap_item": 1 if r.is_waste else 0,
                 "allow_zero_valuation_rate": 1 if (r.is_waste or not r.valuation_rate) else 0,
             })
         additional = []
