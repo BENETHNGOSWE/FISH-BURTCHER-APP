@@ -80,6 +80,8 @@ def _se_item(args):
         row["serial_no"] = args["serial_no"]
     if args.get("allow_zero_valuation_rate"):
         row["allow_zero_valuation_rate"] = 1
+    if args.get("is_finished_item"):
+        row["is_finished_item"] = 1
     return row
 
 
@@ -119,6 +121,9 @@ def make_stock_entry(purpose, items, company=None, posting_date=None, posting_ti
                 "description": c.get("description"),
                 "amount": flt(c.get("amount")),
             })
+    finished_qty = sum(flt(a.get("qty")) for a in items if a.get("is_finished_item"))
+    if finished_qty and frappe.get_meta("Stock Entry").has_field("fg_completed_qty"):
+        se.fg_completed_qty = finished_qty
     se.flags.ignore_validate_update_after_submit = True
     se.insert(ignore_permissions=True)
     # back-link stamped after insert (custom fields exist on Stock Entry)
