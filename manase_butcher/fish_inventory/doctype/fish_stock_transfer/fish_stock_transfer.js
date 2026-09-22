@@ -1,6 +1,7 @@
 frappe.ui.form.on("Fish Stock Transfer", {
     refresh(frm) {
         frm.events.recalculate_totals(frm);
+        frm.events.show_transfer_progress(frm);
 
         if (frm.doc.docstatus !== 1) return;
 
@@ -37,6 +38,31 @@ frappe.ui.form.on("Fish Stock Transfer", {
 
     validate(frm) {
         frm.events.recalculate_totals(frm);
+    },
+
+    show_transfer_progress(frm) {
+        const labels = ["Submitted", "Approved", "Dispatched", "Completed"];
+        const current = frm.doc.status === "Received" ? "Completed" : (frm.doc.status || "Draft");
+        const current_index = Math.max(labels.indexOf(current), 0);
+        const colors = {
+            Submitted: "#22c55e",
+            Approved: "#f59e0b",
+            Dispatched: "#3b82f6",
+            Completed: "#16a34a"
+        };
+        const steps = labels.map((label, index) => {
+            const active = index <= current_index;
+            const color = active ? colors[label] : "#d1d5db";
+            return `<div style="flex:1; text-align:center; color:${color}; font-weight:${active ? 600 : 400};">
+                <div style="height:8px; margin:0 3px 6px; border-radius:4px; background:${color};"></div>
+                <span>${label}</span>
+            </div>`;
+        }).join("");
+        const status_color = colors[current] || "#6b7280";
+        frm.set_intro(`<div style="padding:8px 12px; border-left:4px solid ${status_color}; background:#f8fafc;">
+            <div style="font-size:14px; margin-bottom:8px;"><b>Transfer status: ${current}</b></div>
+            <div style="display:flex; width:100%; align-items:flex-start;">${steps}</div>
+        </div>`, "blue");
     },
 
     recalculate_totals(frm) {
