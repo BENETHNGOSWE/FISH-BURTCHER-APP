@@ -16,6 +16,7 @@ app_include_css = "/assets/manase_butcher/css/manase_butcher.css"
 app_include_js = "/assets/manase_butcher/js/manase_butcher.bundle.js"
 
 doctype_js = {
+    "Fish Stock Transfer": "fish_inventory/doctype/fish_stock_transfer/fish_stock_transfer.js",
     "Sales Invoice": "public/js/sales_invoice.js",
     "Item": "public/js/item.js",
     "Warehouse": "public/js/warehouse.js",

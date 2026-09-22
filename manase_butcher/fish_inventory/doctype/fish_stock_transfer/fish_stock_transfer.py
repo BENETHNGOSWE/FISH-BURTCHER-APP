@@ -72,6 +72,8 @@ class FishStockTransfer(Document):
     @frappe.whitelist()
     def dispatch(self):
         self._require_any(DISPATCHERS)
+        if self.status == "Dispatched":
+            return self.get("outbound_stock_entry")
         if self.status != "Approved":
             frappe.throw(_("Transfer must be Approved before dispatch"))
         for r in self.items:
@@ -97,6 +99,8 @@ class FishStockTransfer(Document):
 
     @frappe.whitelist()
     def receive(self, create_waste_for_variance=1):
+        if self.status in ("Completed", "Received"):
+            return self.get("inbound_stock_entry")
         roles = set(frappe.get_roles())
         if not (roles & set((ROLE_OWNER, ROLE_GM, ROLE_INVENTORY, ROLE_BRANCH_MANAGER,
                             ROLE_WAREHOUSE, "Stock Manager", "System Manager", "Administrator"))):
