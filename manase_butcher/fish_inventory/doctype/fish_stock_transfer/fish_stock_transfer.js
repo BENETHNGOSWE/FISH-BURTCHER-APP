@@ -41,28 +41,48 @@ frappe.ui.form.on("Fish Stock Transfer", {
     },
 
     show_transfer_progress(frm) {
+        // Keep the process indicator in the form header, beside ERPNext's
+        // Submitted pill, rather than adding a large block above the form.
+        frm.set_intro("");
+        const wrapper = frm.page.wrapper;
+        wrapper.find(".mb-transfer-stepper").remove();
+
         const labels = ["Submitted", "Approved", "Dispatched", "Completed"];
-        const current = frm.doc.status === "Received" ? "Completed" : (frm.doc.status || "Draft");
-        const current_index = Math.max(labels.indexOf(current), 0);
-        const colors = {
-            Submitted: "#22c55e",
-            Approved: "#f59e0b",
-            Dispatched: "#3b82f6",
-            Completed: "#16a34a"
-        };
-        const steps = labels.map((label, index) => {
-            const active = index <= current_index;
-            const color = active ? colors[label] : "#d1d5db";
-            return `<div style="flex:1; text-align:center; color:${color}; font-weight:${active ? 600 : 400};">
-                <div style="height:8px; margin:0 3px 6px; border-radius:4px; background:${color};"></div>
-                <span>${label}</span>
-            </div>`;
+        const raw_status = frm.doc.status || "Draft";
+        const current = raw_status === "Received" ? "Completed" : raw_status;
+        const cancelled = raw_status === "Cancelled";
+        const current_index = labels.indexOf(current);
+        const colors = ["#55d6d1", "#3ec9c5", "#35b7e9", "#17558f"];
+        const active_color = cancelled ? "#ef4444" : "#35b7e9";
+
+        const step_html = labels.map((label, index) => {
+            const active = !cancelled && current_index >= index;
+            const color = active ? colors[index] : "#d7dce2";
+            const text_color = active ? "#ffffff" : "#8c98a6";
+            return `<span style="display:inline-flex; align-items:center; justify-content:center;
+                min-width:88px; height:28px; margin-right:4px; padding:0 18px 0 14px;
+                color:${text_color}; background:${color}; font-size:11px; font-weight:600;
+                clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);">
+                ${label}
+            </span>`;
         }).join("");
-        const status_color = colors[current] || "#6b7280";
-        frm.set_intro(`<div style="padding:8px 12px; border-left:4px solid ${status_color}; background:#f8fafc;">
-            <div style="font-size:14px; margin-bottom:8px;"><b>Transfer status: ${current}</b></div>
-            <div style="display:flex; width:100%; align-items:flex-start;">${steps}</div>
-        </div>`, "blue");
+        const cancelled_html = cancelled ? `<span style="display:inline-flex; align-items:center;
+            height:28px; padding:0 18px; color:#fff; background:#ef4444; font-size:11px;
+            font-weight:600; border-radius:4px;">Cancelled</span>` : "";
+        const status_label = cancelled ? "Cancelled" : current;
+        const stepper = $(`<div class="mb-transfer-stepper" title="Transfer status: ${status_label}"
+            style="display:flex; align-items:center; margin-left:16px; white-space:nowrap;">
+            ${step_html}${cancelled_html}
+        </div>`);
+
+        const header = wrapper.find(".page-head .page-head-content").first();
+        if (!header.length) return;
+        const indicator = header.find(".indicator-pill, .indicator").first();
+        if (indicator.length) {
+            indicator.after(stepper);
+        } else {
+            header.append(stepper);
+        }
     },
 
     recalculate_totals(frm) {
