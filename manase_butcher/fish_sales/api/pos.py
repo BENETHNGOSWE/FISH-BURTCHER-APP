@@ -53,7 +53,8 @@ def get_pos_context(branch=None):
 def get_branch_items(branch, search=None, price_type="Retail"):
     _require_pos()
     warehouse = get_branch_warehouse(branch)
-    conds = ["i.disabled=0", "i.is_sales_item=1", "i.mb_is_fish=1"]
+    conds = ["i.disabled=0", "i.is_sales_item=1", "i.mb_is_fish=1",
+             "COALESCE(i.mb_sellable, 0)=1", "COALESCE(i.mb_fish_category, '') != 'Waste'"]
     values = [warehouse]
     if search:
         conds.append("(i.item_name LIKE %s OR i.name LIKE %s)")
@@ -113,6 +114,12 @@ def submit_sale():
     if not items:
         frappe.throw(_("Add at least one fish line"))
     for line in items:
+        item_meta = frappe.db.get_value("Item", line.get("item"),
+                                       ["is_sales_item", "mb_is_fish", "mb_sellable", "mb_fish_category"],
+                                       as_dict=True)
+        if not item_meta or not item_meta.is_sales_item or not item_meta.mb_is_fish \
+                or not item_meta.mb_sellable or item_meta.mb_fish_category == "Waste":
+            frappe.throw(_("{0} is not a sellable fish item").format(line.get("item")))
         kg = flt(line.get("kg") or line.get("qty_kg"))
         if kg <= 0:
             frappe.throw(_("KG must be greater than zero"))
