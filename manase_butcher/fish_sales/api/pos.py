@@ -102,6 +102,19 @@ def submit_sale():
     si.customer = customer or _walkin_customer()
     si.posting_date = getdate()
     si.posting_time = nowtime()
+    si.naming_series = (frappe.db.get_single_value("Selling Settings", "sales_invoice_series")
+                        or "ACC-SINV-.YYYY.-")
+    si.currency = settings.default_currency or frappe.db.get_value(
+        "Company", settings.company, "default_currency") or "TZS"
+    si.conversion_rate = 1
+    si.selling_price_list = settings.retail_price_list or "Standard Selling"
+    si.price_list_currency = si.currency
+    si.plc_conversion_rate = 1
+    try:
+        from erpnext.accounts.party import get_party_account
+        si.debit_to = get_party_account("Customer", si.customer, settings.company)
+    except Exception:
+        si.debit_to = frappe.db.get_value("Company", settings.company, "default_receivable_account")
     si.is_pos = 1
     si.update_stock = 1
     si.set_warehouse = warehouse
@@ -139,8 +152,8 @@ def submit_sale():
             "mb_weight_kg": kg,
         })
     si.discount_amount = flt(data.get("discount_total"))
+    si.set_missing_values()
     si.flags.ignore_validate_update_after_submit = True
-    si.flags.ignore_validate = True
     si.insert(ignore_permissions=True)
     _check_discount_authority(si, settings)
     si.submit()
