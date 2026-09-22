@@ -25,7 +25,12 @@ frappe.ui.form.on("Fish Stock Transfer", {
                 if (missing_reason) {
                     frappe.throw(__("Enter a variance reason for every short-received line before receiving."));
                 }
-                frm.save().then(() => frm.call("receive")).then(() => frm.reload_doc());
+                const receive_call = () => frm.call("receive").then(() => frm.reload_doc());
+                if (frm.is_dirty()) {
+                    frm.save().then(receive_call);
+                } else {
+                    receive_call();
+                }
             }, __("Actions"));
         }
     },
