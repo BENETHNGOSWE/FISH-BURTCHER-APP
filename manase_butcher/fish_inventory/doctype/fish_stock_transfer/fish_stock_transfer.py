@@ -84,7 +84,8 @@ class FishStockTransfer(Document):
             "s_warehouse": self.source_warehouse,
             "t_warehouse": self.transit_warehouse,
         } for r in self.items]
-        se = make_stock_entry("Material Transfer", items, company=self.company,
+        company = self.get("company") or get_settings().company
+        se = make_stock_entry("Material Transfer", items, company=company,
                               posting_date=getdate(self.posting_date),
                               from_doctype="Fish Stock Transfer", from_docname=self.name,
                               stage="Transfer Dispatch",
@@ -122,7 +123,8 @@ class FishStockTransfer(Document):
             })
         se = None
         if items:
-            se = make_stock_entry("Material Transfer", items, company=self.company,
+            company = self.get("company") or get_settings().company
+            se = make_stock_entry("Material Transfer", items, company=company,
                                   posting_date=getdate(self.posting_date),
                                   branch=self.target_branch,
                                   from_doctype="Fish Stock Transfer", from_docname=self.name,
