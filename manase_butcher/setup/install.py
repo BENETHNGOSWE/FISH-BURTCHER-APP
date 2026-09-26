@@ -94,6 +94,7 @@ def after_migrate(*args, **kwargs):
         _ensure_company_structure(company)
         _configure_settings(company)
     _rename_kg_report()
+    _sync_standard_reports()
     _sync_workspaces()
     _ensure_desktop_icon()
     try:
@@ -116,6 +117,23 @@ def _rename_kg_report():
                                 update_modified=False)
     except Exception:
         frappe.log_error(title="KG report rename failed", message=frappe.get_traceback())
+
+
+def _sync_standard_reports():
+    """Ensure app Script Reports exist before workspace links are validated."""
+    root = Path(__file__).resolve().parents[1] / "report"
+    for path in root.glob("*/*.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if data.get("doctype") != "Report" or not data.get("name"):
+                continue
+            if not frappe.db.exists("Report", data["name"]):
+                doc = frappe.get_doc(data)
+                doc.flags.ignore_permissions = True
+                doc.insert(ignore_permissions=True)
+        except Exception:
+            frappe.log_error(title=f"Report sync failed: {path.name}",
+                             message=frappe.get_traceback())
 
 
 def _ensure_desktop_icon():
