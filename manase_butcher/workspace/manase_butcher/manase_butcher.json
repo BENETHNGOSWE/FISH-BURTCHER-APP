@@ -196,6 +196,26 @@
    "onboard": 0,
    "is_query_report": 0,
    "link_type": "DocType"
+  },
+  {
+   "type": "Link",
+   "label": "Waste Analysis",
+   "link_to": "Waste Analysis",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "link_type": "Report"
+  },
+  {
+   "type": "Link",
+   "label": "Customer Debt Aging",
+   "link_to": "Customer Debt Aging",
+   "doc_view": "List",
+   "dependencies": "",
+   "onboard": 0,
+   "is_query_report": 1,
+   "link_type": "Report"
   }
  ],
  "charts": [],
