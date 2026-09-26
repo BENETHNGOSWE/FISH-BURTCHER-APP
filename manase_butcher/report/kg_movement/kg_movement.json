@@ -13,5 +13,11 @@
  "letter_head": null,
  "disabled": 0,
  "idx": 0,
- "filters": []
+ "filters": [
+  {"fieldname": "from_date", "label": "From Date", "fieldtype": "Date", "reqd": 1},
+  {"fieldname": "to_date", "label": "To Date", "fieldtype": "Date", "reqd": 1},
+  {"fieldname": "branch", "label": "Branch", "fieldtype": "Link", "options": "Branch"},
+  {"fieldname": "warehouse", "label": "Warehouse", "fieldtype": "Link", "options": "Warehouse"},
+  {"fieldname": "item_code", "label": "Fish Item", "fieldtype": "Link", "options": "Item"}
+ ]
 }
