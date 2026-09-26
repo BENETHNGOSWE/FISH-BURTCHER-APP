@@ -58,7 +58,8 @@ class DailyBranchClosing(Document):
                WHERE si.mb_branch=%s AND si.posting_date=%s AND si.docstatus=1 AND si.is_return=0""",
             (self.branch, day))[0][0] or 0, 3)
 
-        # payments grouped by mode
+        # Payments can be recorded either in standard POS invoice payment rows
+        # or in standalone Payment Entries. Include both sources.
         pay_rows = frappe.db.sql(
             """SELECT pe.mode_of_payment, pe.mb_mobile_provider AS provider,
                      SUM(pe.paid_amount) AS amount
@@ -67,8 +68,19 @@ class DailyBranchClosing(Document):
                      AND pe.payment_type='Receive'
                GROUP BY pe.mode_of_payment, pe.mb_mobile_provider""",
             (self.branch, day), as_dict=True)
-        # invoices fully on credit (no payment) represented as Credit mode
         amounts = {(r.mode_of_payment, r.provider): flt(r.amount) for r in pay_rows}
+        pos_rows = frappe.db.sql(
+            """SELECT sip.mode_of_payment, NULL AS provider, SUM(sip.amount) AS amount
+               FROM `tabSales Invoice Payment` sip
+               JOIN `tabSales Invoice` si ON si.name=sip.parent
+               WHERE si.mb_branch=%s AND si.posting_date=%s AND si.docstatus=1
+                     AND si.is_return=0
+               GROUP BY sip.mode_of_payment""",
+            (self.branch, day), as_dict=True)
+        for r in pos_rows:
+            key = (r.mode_of_payment, None)
+            amounts[key] = amounts.get(key, 0) + flt(r.amount)
+        # invoices fully on credit (no payment) represented as Credit mode
         if flt(self.credit_total) > 0:
             amounts[("Credit", None)] = amounts.get(("Credit", None), 0) + flt(self.credit_total)
         self.set("payments", [])
