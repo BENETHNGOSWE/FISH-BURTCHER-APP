@@ -259,34 +259,156 @@
  ],
  "shortcuts": [
   {
-   "type": "Report",
+   "label": "Fish Receiving",
+   "type": "DocType",
+   "link_to": "Fish Receiving",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Processing",
+   "type": "DocType",
+   "link_to": "Fish Processing",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Stock Transfer",
+   "type": "DocType",
+   "link_to": "Fish Stock Transfer",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Branch Stock Reconciliation",
+   "type": "DocType",
+   "link_to": "Branch Stock Reconciliation",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Waste Records",
+   "type": "DocType",
+   "link_to": "Fish Waste Record",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Batches",
+   "type": "DocType",
+   "link_to": "Fish Batch",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Customer Orders",
+   "type": "DocType",
+   "link_to": "Customer Order",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Sales Invoices",
+   "type": "DocType",
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Expenses",
+   "type": "DocType",
+   "link_to": "Fish Expense",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Daily Branch Closing",
+   "type": "DocType",
+   "link_to": "Daily Branch Closing",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Branches",
+   "type": "DocType",
+   "link_to": "Branch",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Fish Species",
+   "type": "DocType",
+   "link_to": "Fish Species",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Manase Butcher Settings",
+   "type": "DocType",
+   "link_to": "Manase Butcher Settings",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
+   "label": "Audit Log",
+   "type": "DocType",
+   "link_to": "Audit Log",
+   "link_type": "DocType",
+   "doc_view": "List",
+   "col": 4
+  },
+  {
    "label": "KG Movement",
+   "type": "Report",
    "link_to": "KG Movement",
-   "link_type": "Report"
+   "link_type": "Report",
+   "doc_view": "List",
+   "col": 4
   },
   {
-   "type": "Report",
    "label": "Processing Yield",
+   "type": "Report",
    "link_to": "Processing Yield",
-   "link_type": "Report"
+   "link_type": "Report",
+   "doc_view": "List",
+   "col": 4
   },
   {
-   "type": "Report",
    "label": "Waste Analysis",
+   "type": "Report",
    "link_to": "Waste Analysis",
-   "link_type": "Report"
+   "link_type": "Report",
+   "doc_view": "List",
+   "col": 4
   },
   {
-   "type": "Report",
    "label": "Customer Debt Aging",
+   "type": "Report",
    "link_to": "Customer Debt Aging",
-   "link_type": "Report"
+   "link_type": "Report",
+   "doc_view": "List",
+   "col": 4
   },
   {
-   "type": "Report",
    "label": "Branch Performance",
+   "type": "Report",
    "link_to": "Branch Performance",
-   "link_type": "Report"
+   "link_type": "Report",
+   "doc_view": "List",
+   "col": 4
   }
  ],
  "pin_to_bottom": 0,
