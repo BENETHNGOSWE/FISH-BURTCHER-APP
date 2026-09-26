@@ -93,6 +93,7 @@ def after_migrate(*args, **kwargs):
         # and price lists, then refresh all Settings links from the live records.
         _ensure_company_structure(company)
         _configure_settings(company)
+    _rename_kg_report()
     _sync_workspaces()
     _ensure_desktop_icon()
     try:
@@ -101,6 +102,20 @@ def after_migrate(*args, **kwargs):
     except Exception:
         frappe.log_error(title="Number cards setup failed", message=frappe.get_traceback())
     frappe.db.commit()
+
+
+def _rename_kg_report():
+    """Use a URL-safe report name; '?' breaks Frappe report routes."""
+    old_name = "Where Did The KG Go?"
+    new_name = "KG Movement"
+    try:
+        if frappe.db.exists("Report", old_name) and not frappe.db.exists("Report", new_name):
+            frappe.rename_doc("Report", old_name, new_name, force=True)
+        if frappe.db.exists("Report", new_name):
+            frappe.db.set_value("Report", new_name, "report_name", new_name,
+                                update_modified=False)
+    except Exception:
+        frappe.log_error(title="KG report rename failed", message=frappe.get_traceback())
 
 
 def _ensure_desktop_icon():

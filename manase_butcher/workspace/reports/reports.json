@@ -19,8 +19,8 @@
  "links": [
   {
    "type": "Report",
-   "label": "Where Did The KG Go?",
-   "link_to": "Where Did The KG Go?",
+   "label": "KG Movement",
+   "link_to": "KG Movement",
    "doc_view": "List",
    "dependencies": "",
    "onboard": 0,
