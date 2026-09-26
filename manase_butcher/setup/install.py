@@ -209,7 +209,9 @@ def _sync_workspaces():
             for shortcut in data.get("shortcuts", []):
                 target = shortcut.get("link_to")
                 link_type = shortcut.get("link_type") or "DocType"
-                if target and frappe.db.exists(link_type, target):
+                # Keep Report shortcuts visible even when report sync is delayed;
+                # Frappe will resolve the target after migrate completes.
+                if target and (link_type == "Report" or frappe.db.exists(link_type, target)):
                     row = dict(shortcut)
                     row.pop("col", None)
                     doc.append("shortcuts", row)
