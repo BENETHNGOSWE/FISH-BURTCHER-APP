@@ -93,6 +93,7 @@ def after_migrate(*args, **kwargs):
         # and price lists, then refresh all Settings links from the live records.
         _ensure_company_structure(company)
         _configure_settings(company)
+    _sync_standard_pages()
     _rename_kg_report()
     _sync_standard_reports()
     _sync_workspaces()
@@ -103,6 +104,23 @@ def after_migrate(*args, **kwargs):
     except Exception:
         frappe.log_error(title="Number cards setup failed", message=frappe.get_traceback())
     frappe.db.commit()
+
+
+def _sync_standard_pages():
+    """Ensure app Page records exist before workspace link validation."""
+    root = Path(__file__).resolve().parents[1] / "page"
+    for path in root.glob("*/*.json"):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if data.get("doctype") != "Page" or not data.get("name"):
+                continue
+            if not frappe.db.exists("Page", data["name"]):
+                doc = frappe.get_doc(data)
+                doc.flags.ignore_permissions = True
+                doc.insert(ignore_permissions=True)
+        except Exception:
+            frappe.log_error(title=f"Page sync failed: {path.name}",
+                             message=frappe.get_traceback())
 
 
 def _rename_kg_report():
