@@ -1,0 +1,101 @@
+x-manase-image: &manase-image
+  build:
+    context: .
+    dockerfile: Dockerfile
+  image: manase-butcher-erpnext:16.34.1
+
+x-manase-common: &manase-common
+  <<: *manase-image
+  entrypoint:
+    - /bin/bash
+    - /opt/scripts/dl-entrypoint.sh
+  restart: unless-stopped
+  environment: &manase-env
+    DB_HOST: mariadb
+    DB_PORT: "3306"
+    DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in Coolify}
+    REDIS_CACHE: redis://redis-cache:6379
+    REDIS_QUEUE: redis://redis-queue:6379
+    REDIS_SOCKETIO: redis://redis-queue:6379
+    SOCKETIO_PORT: "9000"
+  volumes:
+    - sites:/home/frappe/frappe-bench/sites
+
+services:
+  frontend:
+    <<: *manase-common
+    command: ["nginx-entrypoint.sh"]
+    environment:
+      <<: *manase-env
+      BACKEND: backend:8000
+      FRAPPE_SITE_NAME_HEADER: ${FRAPPE_SITE_NAME_HEADER:?Set the public site hostname in Coolify}
+      SOCKETIO: websocket:9000
+      UPSTREAM_REAL_IP_ADDRESS: 127.0.0.1
+      UPSTREAM_REAL_IP_HEADER: X-Forwarded-For
+      UPSTREAM_REAL_IP_RECURSIVE: "off"
+      CLIENT_MAX_BODY_SIZE: 50m
+    depends_on:
+      - backend
+      - websocket
+    expose:
+      - "8080"
+
+  backend:
+    <<: *manase-common
+    command: ["start.sh"]
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+
+  websocket:
+    <<: *manase-common
+    command: ["node", "/home/frappe/frappe-bench/apps/frappe/socketio.js"]
+    depends_on:
+      - backend
+
+  scheduler:
+    <<: *manase-common
+    command: ["bench", "schedule"]
+    depends_on:
+      - backend
+
+  worker:
+    <<: *manase-common
+    command: ["bench", "worker", "--queue", "default,short,long"]
+    depends_on:
+      - backend
+
+  mariadb:
+    image: mariadb:10.6
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in Coolify}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-name-resolve
+      - --skip-host-cache
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 6s
+      timeout: 5s
+      retries: 30
+
+  redis-cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  redis-queue:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-queue-data:/data
+
+volumes:
+  sites:
+  mariadb-data:
+  redis-queue-data:
