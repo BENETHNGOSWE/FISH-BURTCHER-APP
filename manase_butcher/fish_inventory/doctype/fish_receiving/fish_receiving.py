@@ -76,13 +76,16 @@ class FishReceiving(Document):
 
     # ------------------------------------------------------------ submit -> PR
     def on_submit(self):
+        # ERPNext validates batch_no while the Purchase Receipt is submitted.
+        # Create the ERPNext batches before creating the Purchase Receipt so
+        # the generated PR item rows receive their batch numbers.
+        self._create_batches()
         pr = self._create_purchase_receipt()
         self.db_set("purchase_receipt", pr.name)
         if self.create_purchase_invoice:
             pi = self._create_purchase_invoice(pr.name)
             if pi:
                 self.db_set("purchase_invoice", pi)
-        self._create_batches(pr.name)
         log_action("Fish Receiving", self.name, "Submit",
                    new_value={"total_kg": self.total_qty_kg,
                               "landed_cost": self.total_landed_cost})
@@ -145,7 +148,7 @@ class FishReceiving(Document):
                              message=frappe.get_traceback())
             return None
 
-    def _create_batches(self, pr_name):
+    def _create_batches(self):
         from erpnext.stock.doctype.batch.batch import Batch  # noqa
         for row in self.items:
             if row.batch:
