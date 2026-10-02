@@ -10,6 +10,15 @@ from manase_butcher.branch_utils import get_settings
 
 
 class FishReceiving(Document):
+    # ------------------------------------------------------------ amendment
+    def before_insert(self):
+        # Frappe copies link fields when amending a submitted document. The
+        # generated ERPNext documents must be created afresh for the amended
+        # Fish Receiving document, not reused from the cancelled receipt.
+        if self.amended_from:
+            self.purchase_receipt = None
+            self.purchase_invoice = None
+
     # ------------------------------------------------------------ validation
     def validate(self):
         self._set_defaults()
@@ -38,7 +47,10 @@ class FishReceiving(Document):
         self.total_qty_kg = round(sum(flt(r.qty_kg) for r in self.items), 3)
         self.total_pieces = sum(flt(r.pieces or 0) for r in self.items)
         self.purchase_total = round(sum(flt(r.amount) for r in self.items), 2)
-        landed = sum(flt(c.amount) for c in self.landing_costs if c.account)
+        # Calculate the displayed landed cost from every entered cost line.
+        # A line without an account must not silently disappear from the
+        # total; submission validation below prevents posting such a line.
+        landed = sum(flt(c.amount) for c in self.landing_costs)
         self.total_landed_cost = flt(self.purchase_total) + flt(landed)
         self.landed_cost_per_kg = (self.total_landed_cost / self.total_qty_kg
                                    if self.total_qty_kg else 0)
@@ -56,6 +68,11 @@ class FishReceiving(Document):
                 frappe.throw(_("Weight (KG) must be greater than zero for {0}").format(row.item))
             if flt(row.rate) < 0:
                 frappe.throw(_("Rate cannot be negative for {0}").format(row.item))
+        for cost in self.landing_costs:
+            if flt(cost.amount) < 0:
+                frappe.throw(_("Additional cost cannot be negative"))
+            if flt(cost.amount) and not cost.account:
+                frappe.throw(_("Account is required for landed cost {0}").format(cost.cost_type))
 
     # ------------------------------------------------------------ submit -> PR
     def on_submit(self):
