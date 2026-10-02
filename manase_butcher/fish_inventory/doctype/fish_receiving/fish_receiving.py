@@ -163,12 +163,18 @@ class FishReceiving(Document):
     # ------------------------------------------------------------ cancel
     def on_cancel(self):
         if self.purchase_invoice:
-            self._cancel("Purchase Invoice", self.purchase_invoice)
+            self._cancel_linked("Purchase Invoice", self.purchase_invoice)
         if self.purchase_receipt:
-            self._cancel("Purchase Receipt", self.purchase_receipt)
+            self._cancel_linked("Purchase Receipt", self.purchase_receipt)
         log_action("Fish Receiving", self.name, "Cancel", branch=None)
 
-    def _cancel(self, dt, name):
+    def _cancel_linked(self, dt, name):
+        """Cancel a linked ERPNext document without overriding Document._cancel.
+
+        Frappe internally calls Document._cancel() with no arguments. The old
+        helper was also named _cancel(dt, name), which broke cancellation of a
+        linked Fish Receiving document.
+        """
         try:
             doc = frappe.get_doc(dt, name)
             if doc.docstatus == 1:
