@@ -156,11 +156,15 @@ class FishReceiving(Document):
             try:
                 b = frappe.new_doc("Batch")
                 b.item = row.item
-                b.batch_id = None
+                # Batch ID is mandatory for batch-controlled items. Use a
+                # deterministic receipt-based ID so the generated Purchase
+                # Receipt always has a valid batch_no before submission.
+                b.batch_id = f"{row.item}-{self.name}"
                 b.mb_supplier = self.supplier
                 b.mb_received_date = getdate(self.posting_date)
                 b.flags.ignore_permissions = True
                 b.insert()
+                row.batch = b.name
                 row.db_set("batch", b.name)
                 fb = frappe.new_doc("Fish Batch")
                 fb.supplier = self.supplier
