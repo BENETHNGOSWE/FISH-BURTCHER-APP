@@ -181,8 +181,13 @@ class FishReceiving(Document):
                 fb.submit()
                 b.db_set("mb_fish_batch", fb.name)
             except Exception:
+                # Do not continue to Purchase Receipt without a batch_no.
+                # The old code logged and swallowed this error, which caused
+                # the less useful downstream "Batch ID is mandatory" banner.
                 frappe.log_error(title="Fish batch create failed",
                                  message=frappe.get_traceback())
+                frappe.throw(_("Could not create batch for {0}: {1}").format(
+                    row.item, frappe.get_traceback()))
 
     # ------------------------------------------------------------ cancel
     def on_cancel(self):
