@@ -83,18 +83,19 @@ class FishProcessing(Document):
         for r in self.outputs:
             target = self.waste_warehouse if r.is_waste else (
                 r.target_warehouse or self.target_warehouse)
-            # This ERPNext build has no scrap/process-loss field on Stock
-            # Entry Detail. Treat both sellable output and waste as finished
-            # outputs of the manufacture entry; their separate warehouses
-            # preserve the stock classification without requiring s_warehouse.
-            is_finished = True
+            # This ERPNext build has no scrap/process-loss field and does
+            # not allow multiple finished items in a Manufacture entry.
+            # Post sellable output in Manufacture; post waste separately as a
+            # zero-valuation Material Receipt to the waste warehouse.
+            if r.is_waste:
+                continue
             finished_qty += flt(r.qty_kg)
             items.append({
                 "item": r.item, "qty": flt(r.qty_kg), "uom": "Kg",
                 "t_warehouse": target,
                 "rate": flt(r.valuation_rate) or 0,
-                "is_finished_item": 1 if is_finished else 0,
-                "allow_zero_valuation_rate": 1 if (r.is_waste or not r.valuation_rate) else 0,
+                "is_finished_item": 1,
+                "allow_zero_valuation_rate": 1 if not r.valuation_rate else 0,
             })
         additional = []
         if flt(self.processing_cost) > 0:
@@ -113,6 +114,31 @@ class FishProcessing(Document):
             stage="Processing Output", stock_entry_type="Manufacture",
             set_basic_rate=False)
         self.db_set("stock_entry", se.name)
+
+        # This ERPNext build has no scrap field and permits only one finished
+        # item in Manufacture. Receive waste separately at zero valuation.
+        for r in self.outputs:
+            if not r.is_waste:
+                continue
+            waste_se = make_stock_entry(
+                "Material Receipt",
+                [{
+                    "item": r.item,
+                    "qty": flt(r.qty_kg),
+                    "uom": "Kg",
+                    "t_warehouse": self.waste_warehouse,
+                    "rate": 0,
+                    "allow_zero_valuation_rate": 1,
+                }],
+                company=self.company,
+                posting_date=getdate(self.posting_date),
+                from_doctype="Fish Processing",
+                from_docname=self.name,
+                stage="Processing Waste",
+                stock_entry_type="Material Receipt",
+                set_basic_rate=False,
+            )
+
         self._update_batch(se.name)
         log_action("Fish Processing", self.name, "Approval",
                    field_label="approval_status", old_value="Pending Approval",
@@ -140,8 +166,14 @@ class FishProcessing(Document):
             frappe.log_error(title="Fish batch update failed", message=frappe.get_traceback())
 
     def on_cancel(self):
-        if self.stock_entry:
-            se = frappe.get_doc("Stock Entry", self.stock_entry)
+        # Cancel the manufacture entry and the separate waste receipt.
+        entries = frappe.get_all(
+            "Stock Entry",
+            filters={"mb_fish_processing": self.name},
+            pluck="name",
+        )
+        for entry_name in entries:
+            se = frappe.get_doc("Stock Entry", entry_name)
             if se.docstatus == 1:
                 se.flags.ignore_permissions = True
                 se.cancel()
