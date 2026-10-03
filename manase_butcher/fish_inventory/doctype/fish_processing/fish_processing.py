@@ -152,16 +152,19 @@ class FishProcessing(Document):
             return
         try:
             b = frappe.get_doc("Fish Batch", self.fish_batch)
-            if b.docstatus == 1:
-                b.cancel()
-            b.sellable_kg = flt(b.sellable_kg) + self.sellable_output_kg
-            b.waste_kg = flt(b.waste_kg) + self.waste_kg
-            b.yield_pct = (round(100 * b.sellable_kg / b.received_kg, 2)
-                           if flt(b.received_kg) else b.yield_pct)
-            b.status = "In Stock"
-            b.flags.ignore_permissions = True
-            b.save()
-            b.submit()
+            # Fish Batch is linked from this submitted Fish Processing record.
+            # Cancelling it triggers Frappe's linked-document protection. Update
+            # the summary fields directly instead of cancel/save/submit.
+            sellable_kg = flt(b.sellable_kg) + self.sellable_output_kg
+            waste_kg = flt(b.waste_kg) + self.waste_kg
+            yield_pct = (round(100 * sellable_kg / b.received_kg, 2)
+                         if flt(b.received_kg) else b.yield_pct)
+            frappe.db.set_value("Fish Batch", b.name, {
+                "sellable_kg": sellable_kg,
+                "waste_kg": waste_kg,
+                "yield_pct": yield_pct,
+                "status": "In Stock",
+            }, update_modified=True)
         except Exception:
             frappe.log_error(title="Fish batch update failed", message=frappe.get_traceback())
 
