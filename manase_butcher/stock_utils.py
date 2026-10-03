@@ -84,6 +84,10 @@ def _se_item(args):
         row["is_finished_item"] = 1
     if args.get("is_legacy_scrap_item"):
         row["is_legacy_scrap_item"] = 1
+    if args.get("is_scrap_item"):
+        # ERPNext v16 identifies manufacture by-products through this field.
+        # Keep the legacy flag above as well for builds that still inspect it.
+        row["is_scrap_item"] = 1
     return row
 
 
