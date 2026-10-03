@@ -134,7 +134,7 @@ class FishProcessing(Document):
                 posting_date=getdate(self.posting_date),
                 from_doctype="Fish Processing",
                 from_docname=self.name,
-                stage="Processing Waste",
+                stage="Waste",
                 stock_entry_type="Material Receipt",
                 set_basic_rate=False,
             )
