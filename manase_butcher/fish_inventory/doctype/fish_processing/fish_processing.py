@@ -79,24 +79,21 @@ class FishProcessing(Document):
                 "rate": r.valuation_rate or get_valuation_rate(r.item, self.source_warehouse),
                 "batch_no": r.batch,
             })
-        finished_good_set = False
         finished_qty = 0
         for r in self.outputs:
             target = self.waste_warehouse if r.is_waste else (
                 r.target_warehouse or self.target_warehouse)
-            is_finished = bool(not r.is_waste and not finished_good_set)
-            if is_finished:
-                finished_good_set = True
-                finished_qty = flt(r.qty_kg)
+            # This ERPNext build has no scrap/process-loss field on Stock
+            # Entry Detail. Treat both sellable output and waste as finished
+            # outputs of the manufacture entry; their separate warehouses
+            # preserve the stock classification without requiring s_warehouse.
+            is_finished = True
+            finished_qty += flt(r.qty_kg)
             items.append({
                 "item": r.item, "qty": flt(r.qty_kg), "uom": "Kg",
                 "t_warehouse": target,
                 "rate": flt(r.valuation_rate) or 0,
                 "is_finished_item": 1 if is_finished else 0,
-                # ERPNext v16 uses the legacy scrap flag in Manufacture
-                # validation for by-product rows.
-                "is_legacy_scrap_item": 1 if r.is_waste else 0,
-                "is_scrap_item": 1 if r.is_waste else 0,
                 "allow_zero_valuation_rate": 1 if (r.is_waste or not r.valuation_rate) else 0,
             })
         additional = []
